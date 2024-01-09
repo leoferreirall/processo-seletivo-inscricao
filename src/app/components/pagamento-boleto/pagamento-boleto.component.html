@@ -1,0 +1,86 @@
+<ng-template #modal let-modal>
+    <div class="modal-header p-0">
+        <div class="col-md-12" style="text-align: right; cursor: pointer;">
+            <a (click)="close()" style="color: #FF8400;">
+                <i class="material-icons lh-18">close</i>
+            </a>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row h-100 container-mg-fx mb-0">
+            <div class="col-lg-6 bg-container-description">
+                <div class="card-body bg-description">
+                    <div class="container mt-0">
+                        <div class="d-flex justify-content-center">
+                            <div class="p-2">
+                                <div class="logo_fam"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Informações sobre a transação.</h3>
+                    <ul class="list-group mb-3" id="Totalizer">
+                        <li *ngIf="lancamento.parcela > 0" class="list-group-item d-flex justify-content-between">
+                            <span>Pagamento da parcela</span>
+                            <strong id="ChargeTotal">{{lancamento.parcela}}</strong>
+                        </li>
+                        <li *ngIf="lancamento.parcela == 0" class="list-group-item d-flex justify-content-between">
+                            <span>Pagamento da taxa de inscrição</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <div>
+                                <h6 class="my-0">Valor</h6>
+                                <small>TOTAL</small>
+                            </div>
+                            <span>{{lancamento.valorPlano |
+                                currency:'BRL': true }}</span>
+                        </li>
+                        <li *ngIf="lancamento.valorDesconto > 0"
+                            class="list-group-item d-flex justify-content-between bg-light">
+                            <div class="text-success">
+                                <h6 class="my-0">Decréscimo</h6>
+                                <small>DESCONTO</small>
+                            </div>
+                            <span class="text-success">-{{lancamento.valorDesconto | currency:'BRL': true }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total a pagar (BRL)</span>
+                            <strong id="ChargeTotal">{{lancamento.valorTotal | currency:'BRL': true }}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="container mt-3">
+                    <div class="d-flex justify-content-center mb-3">
+                    </div>
+                </div>
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body bg-container-checkout">
+                        <div class="col">
+                            <h2>Pagamento</h2>
+                            <!-- <p>Informações do boleto.</p>
+                            <hr />
+                            <div class="row justify-content-center">
+                                <label>Linha digitável</label>
+                                <p><b>{{boleto.linhaDigitavel | mask: '00000.00000 00000.000000 00000.000000 0
+                                        00000000000000'}}</b></p>
+                            </div> -->
+                            <div *ngIf="!acesso" class="row" style="margin-top: 50px;">
+                                <button type="button" (click)="imprimirBoleto(boleto.codPsBoleto)"
+                                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                                    id="btn-finalize-payment">
+                                    Imprimir boleto
+                                </button>
+                            </div>
+                            <div class="row" *ngIf="acesso">
+                              <div role="alert" class="alert alert-warning col-md-12 text-center">
+                                <strong>O pagamento deverá ser realizado pelo cadidato.</strong>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,66 @@
+<div class="col-sm-12 col-md-12 col-lg-12 p-0">
+    <div class="row mb-0">
+        <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+            <input id="nomesocial" [disabled]="disabled" name="nomesocial" type="text" class="validate" style="text-transform: uppercase;" #nomesocial="ngModel" [(ngModel)]="model.nomesocial" />
+            <label for="nomesocial" class="font-weight-normal" [ngClass]="model.nomesocial?'active':''">Nome Social</label>
+            <!-- <span class="helper-text">Digite seu
+                nome social.</span> -->
+        </div>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+            <input id="rg" [disabled]="disabled" type="text" name="rg" class="validate" #rg="ngModel" [(ngModel)]="model.rg" maxlength="12" required />
+            <label for="rg" class="font-weight-normal" [ngClass]="model.rg?'active':''">RG</label>
+            <span class="helper-text">* Digite seu RG.</span>
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+            <input id="nascimento" [disabled]="disabled" name="nascimento" type="tel" mask="00/00/0000" class="validate" #datanascimento="ngModel" [(ngModel)]="model.dataNascimentoSemFormatacao" validateDateBirth="14" required />
+            <label for="nascimento" class="font-weight-normal" [ngClass]="model.dataNascimentoSemFormatacao?'active':''">Data de Nascimento</label>
+            <span class="helper-text">* Digite sua data de nascimento.</span>
+        </div>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <app-drop-down-list [disabled]="disabled" name="genero" #genero [title]="'Gênero'" [itens]="generos" [show]="true" [defaultvalue]="'Selecione um gênero'" (selectChange)="onChangeGenero($event)">
+        </app-drop-down-list>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+            <!-- <div class="col-sm-12 col-md-12 col-lg-12 "> -->
+            <div class="item row m-0 d-flex justify-content-center">
+                <div class="w-100">
+                    <p>Você é portador de necessidades especiais?</p>
+                </div>
+            </div>
+            <!-- </div> -->
+
+            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                <div class="item row m-0 d-flex justify-content-center mt-0">
+                    <div class="col-md-12 col-xs-12 col-sm-12 p-0 mb-3">
+                        <div class="row m-0">
+                            <div class="col d-flex justify-content-end">
+                                <label class="f-size-termos">
+                                    <input type="radio" [disabled]="disabled" name="possuideficiencia" [value]="true" id="sim"
+                                        [(ngModel)]="model.possuiDeficiencia" required (change)="onChangeDeficiencia($event)"/>
+                                    <span class="d-flex justify-content-center"> Sim</span>
+                                </label>
+                            </div>
+                            <div class="col d-flex justify-content-start">
+                                <label class="f-size-termos">
+                                    <input type="radio" [disabled]="disabled" name="possuideficiencia" [value]="false" id="nao"
+                                        [(ngModel)]="model.possuiDeficiencia" (change)="onChangeDeficiencia($event)" required />
+                                    <span class="d-flex justify-content-center"> Não</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

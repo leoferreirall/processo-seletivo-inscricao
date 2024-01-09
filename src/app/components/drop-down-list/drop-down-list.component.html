@@ -1,0 +1,10 @@
+<div class="form-group col-md-12 p-0" *ngIf="show">
+    <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0 select-focus">
+      <select (change)="onChange($event)" [(ngModel)]="valorselecionado" name="{{name}}" required="{{required}}" [disabled]="itens?.length < 2 || disabled">
+        <!-- <option value="" disabled selected>{{defaultvalue}}</option> -->
+            <option *ngFor="let item of itens" id="{{item.id}}" [ngValue]="item.valor">{{item.texto}}
+            </option>
+        </select>
+        <label class="font-weight-normal d-flex justify-content-start">{{title}}</label>
+    </div>
+</div>

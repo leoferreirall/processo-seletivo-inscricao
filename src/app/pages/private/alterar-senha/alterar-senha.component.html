@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>Alterar Senha</h3>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col form-box">
+        <form #form="ngForm" name="form" (ngSubmit)="form.valid && model.password == model.confirmPassword && onSubmit(model)">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 text-left">
+                    <div class="item row m-0 d-flex justify-content-start">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="password" class="font-weight-normal font-color-fam m-0">Senha</label>
+                                <input id="password" name="password" placeholder="" type="password" class="form-control validate" [ngClass]="{ 'border-danger': password.invalid && (password.dirty || password.touched || form.submitted) }" #password="ngModel" [(ngModel)]="model.password"
+                                    required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$" />
+                                <span class="text-danger" style="font-size: 10px;" *ngIf="password.invalid && (password.dirty || password.touched || form.submitted)">
+                  * A senha não atende aos critérios mínimos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item row m-0 d-flex justify-content-start">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="confirmPassword" class="font-weight-normal font-color-fam m-0">Confirme sua senha</label>
+                                <input id="confirmPassword" name="confirmPassword" placeholder="" type="password" class="form-control validate" [ngClass]="{ 'border-danger': (confirmPassword.invalid || model.password != model.confirmPassword) && (confirmPassword.dirty || confirmPassword.touched || form.submitted) }"
+                                    #confirmPassword="ngModel" [(ngModel)]="model.confirmPassword" [disabled]="password.invalid" required />
+                                <span class="text-danger" style="font-size: 10px;" *ngIf="(confirmPassword.invalid || model.password != model.confirmPassword) && (confirmPassword.dirty || confirmPassword.touched || form.submitted)">
+                  * As senhas devem ser iguais</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item row m-0 d-flex justify-content-start">
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-dark btn-block">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-12 mt-3 justify-content-start text-left">
+                    <span style="font-size: 12px;">
+          * A senha deve conter no mínimo 8 caracteres</span><br>
+                    <span style="font-size: 12px;">
+          * A senha deve conter no mínimo 1 letra maiúscula e um minúscula</span><br>
+                    <span style="font-size: 12px;">
+          * A senha deve conter no mínimo 1 um número</span><br>
+                      <span style="font-size: 12px;">
+          * A senha deve conter no mínimo 1 um caracter especial</span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

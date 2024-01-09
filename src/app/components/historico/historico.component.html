@@ -1,0 +1,121 @@
+<ng-container
+    *ngIf="statusreq !== null && statusreq !== 0 && statusreq !== status.DocumentacaoPendenteEntrega && statusreq !== status.DocumentacaoInvalida">
+    <ng-container *ngIf="statusreq === status.Aprovado && !detalheInscricao.possuiAprovacao">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4 style='color: #ff5900;'>Parabéns!</h4>
+                <p>Você está a um passo de começar seus estudos na FAM, mas ainda existem outros requisitos para serem
+                    cumpridos</p>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.AnaliseCoordenador || statusreq === status.AprovacaoCandidato">
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <h1 class="h5 font-weight-bold">Sua solicitação foi efetuada com sucesso!</h1>
+                <p>A sua documentação está em processo de análise. O prazo para a publicação do resultado é de 15 dias
+                    úteis. Acompanhe a situação de sua análise pelo Portal do Candidato.
+                </p>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.IndeferidoSemOferta || statusreq === status.IndeferidoOutros">
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <p>No momento, sua análise foi indeferida ou reprovada. Para saber mais, envie um e-mail para
+                    <strong>analise.curricular@vemprafam.com.br</strong>.
+                </p>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+<ng-container *ngIf="(statusreq === null || statusreq === 0 || statusreq === status.DocumentacaoInvalida) && detalheInscricao.requisito.ativo === 1">
+    <form #form="ngForm" novalidate>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>HISTÓRICO</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <div *ngIf="statusreq !== status.DocumentacaoInvalida">
+                    <p>Fique atento(a)! Para prosseguir com sua solicitação de Análise Curricular, você deve enviar seus
+                        documentos contendo as informações abaixo:</p>
+                </div>
+                <div *ngIf="statusreq === status.DocumentacaoInvalida">
+                    <p>Ops!</p>
+                    <p>A documentação enviada não atende aos requisitos necessários para que prossigamos com a sua
+                        solicitação de Análise Curricular. Revise os documentos enviados e confira se eles possuem as
+                        seguintes informações:
+                    </p>
+                </div>
+
+                <ul class="text-danger"
+                    *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == 1">
+                    <li><strong>*</strong> Histórico Escolar do Curso da área da Saúde conforme Resolução CNS n.º 287 de
+                        08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República Federativa
+                        do
+                        Brasil;</li>
+                    <li><strong>*</strong> Diploma de Graduação ou certificado de conclusão de curso ou certificado de
+                        colação de grau do curso da área da saúde.</li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="!acesso" class="row">
+            <div class="d-inline w-100">
+                <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+                    <input type="file" multiple #fileUpload style="display: none;" accept="image/*,.pdf">
+                    <button type="button"
+                        class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                        (click)="onClick()"><span class="d-flex align-items-center">Selecionar arquivos</span><span
+                            class="d-flex align-items-center"><i
+                                class="material-icons prefix w-auto pl-2">file_upload</i></span></button>
+                </div>
+            </div>
+            <div class="col-sm-12 d-flex flex-column align-items-start justify-content-center mt-4">
+                <ul *ngFor="let file of files;index as i;">
+                    <li>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <i class="icon-delete-button material-icons" (click)="onDeleteClick(i)">delete</i>
+                            </div>
+                            <div class="col-sm-10">
+                                <p class="justify-content-center">{{file.data.name}}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <p class="text-danger">Clique no botão acima e faça agora o upload de seu histórico
+                acadêmico e diploma de graduação para análise de currículo acadêmico.</p>
+
+            <div class="d-inline w-100">
+                <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+                    <button type="button" [disabled]="files.length == 0"
+                        class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                        (click)="uploadFiles()"><span class="d-flex align-items-center">Confirmar e enviar
+                            documentos</span></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="acesso">
+          <div role="alert" class="alert alert-warning col-md-12 text-center">
+            <strong>O envio dos documentos deverá ser realizado pelo cadidato.</strong>
+          </div>
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="(statusreq === null || statusreq === 0 || statusreq === status.DocumentacaoInvalida || statusreq == status.ReanaliseCoordenador) && detalheInscricao.requisito.ativo == 0">
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM!</h1>
+            <p>
+            Você se inscreveu no Processo Seletivo {{detalheInscricao.periodoLetivo}} mas, infelizmente, o período para envio de documentação já foi encerrado.
+            </p>
+            <p>O Centro Universitário FAM agradece a sua participação!
+            </p>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,19 @@
+.card-menu {
+    display: flex;
+    flex-wrap: wrap;
+    .card {
+        height: 15rem;
+        width: 15rem !important;
+        margin: 5px;
+        cursor: pointer;
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    .card:hover {
+        box-shadow: 0 0 3px rgba(0, 0, 0, .125), 0 3px 5px rgba(0, 0, 0, .2);
+    }
+}

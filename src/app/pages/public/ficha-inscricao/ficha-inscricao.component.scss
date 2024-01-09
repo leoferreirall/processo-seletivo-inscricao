@@ -1,0 +1,17 @@
+.f-size-termos{
+    cursor: pointer;
+}
+
+@media screen and (min-width: 0px) and (max-width: 767px) {
+  div.app_container {
+    left: 16%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  div.app_container {
+    left: 25%;
+  }
+}
+
+

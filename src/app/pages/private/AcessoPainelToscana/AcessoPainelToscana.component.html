@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fd7e14" type="ball-scale-pulse" [fullScreen]="true">
+    <p style="color:#fff">Aguarde enquanto preparamos o ambiente...</p>
+  </ngx-spinner>
+</div>
+
+<div class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 form-box" *ngIf="terminarAcesso">
+  <div class="card p-4">
+      <div class="card-body p-0">
+        <h5><strong>VOCÊ SÓ PODE IR ATÉ AQUI!</strong></h5>
+        <p>Por favor clique no botão cancelar visualização do aluno, para poder efetuar outro acesso</p>
+    </div>
+  </div>
+</div>

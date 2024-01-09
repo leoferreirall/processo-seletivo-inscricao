@@ -1,0 +1,35 @@
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item has-treeview">
+        <a [routerLink]="['minhas-inscricoes']" routerLinkActive="active" class="nav-link d-flex">
+            <i class="nav-icon fas fa-list"></i>
+            <p>
+                Minhas Inscrições
+            </p>
+        </a>
+    </li>
+    <li class="nav-item has-treeview">
+        <a href="#" (click)="adicionaParemetroCreate()" class="nav-link d-flex">
+            <i class="nav-icon fas fa-plus"></i>
+            <p>
+                Nova Inscrição
+            </p>
+        </a>
+    </li>
+    <li [hidden]="acesso" class="nav-item has-treeview">
+        <a class="nav-link d-flex">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+                Perfil
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item w-100 ">
+                <a [routerLink]="['alterar-senha']" routerLinkActive="active" class="nav-link d-flex">
+                    <i class="nav-icon fas fa-edit"></i>
+                    <p>Alterar Senha</p>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>

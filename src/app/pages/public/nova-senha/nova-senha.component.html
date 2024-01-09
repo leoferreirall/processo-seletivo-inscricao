@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="container ">
+    <div class="row cdvfdfd">
+      <div class="col-lg-12 col-md-12 login-box p-0">
+        <div class="row m-0">
+          <div class="col-lg-6 col-md-6 log-det">
+            <div class="small-logo logo">
+            </div>
+            <p class="dfmn">Por favor, informe seu CPF para receber um link e com isso criar sua nova senha.</p>
+            <div class="text-box-cont">
+              <form (submit)="gerarSenha(cpf)">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control ipt_login" [(ngModel)]="cpf" name="cpf" placeholder="CPF"
+                    aria-label="CPF" mask="CPF_CNPJ" maxlength="14" aria-describedby="basic-addon1" />
+                </div>
+                <div class="input-group center">
+                  <button class="btn btn-danger btn-round">Enviar</button>
+                </div>
+                <a [routerLink]="['/painel-do-candidato']">Voltar</a>
+              </form>
+              <div class="row">
+                <!--<p class="small-info">
+                            <a [routerLink]="['/']">Suporte técnico</a>
+                            </p>-->
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 box-de">
+            <div class="inn-cover">
+              <div class="ditk-inf">
+                <h2 class="w-100">Painel do Candidato </h2>
+                <!--<div class="small-img">
+                  <img src="./assets/images/instrucoes_senha.png" class="img-painel" />
+                </div>-->
+              </div>
+              <div class="foter-credit">
+                Desenvolvido por : Canais Digitais
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fd7e14" type="ball-scale-pulse" [fullScreen]="true">
+  </ngx-spinner>
+</div>
+
+<div class="modal fade" id="modalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Será enviada uma nova senha para seu email.
+        <br>
+        {{email}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" (click)="confirmaGerarSenha(cpf)">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>

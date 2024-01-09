@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-12 height-200">
+    <div class="img-fundo-area-aluno img-fluid rounded">
+      <img (click)="redirecionaUrl()" tooltip="CLIQUE PARA MAIS INFORMAÇÕES" placement="bottom"
+        class="img-fluid img-painel-candidato"
+        src="https://www.vemprafam.com.br/api/request_painel_do_candidato.php?c=banner" alt="">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h3>Minhas Inscrições</h3>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xl-6" style="padding: 5px;" *ngFor="let item of inscricoes">
+    <div style="height: 100%;">
+      <div
+        *ngIf="(item.possuiContrato || VerificaAnaliseCurricular(item.idFormaIngresso, item.statusAnalise)) && !InscricaoIfood(item)"
+        class="dropdown listaOpcoes">
+        <a tooltip="MAIS INFORMAÇÕES" placement="top" class="text-gray" role="button" id="dropdownMenuButton1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-ellipsis-v"></i>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngIf="item.possuiContrato"><a class="dropdown-item" role="button"
+              (click)="downloadContrato(item.codPsInscricao)">Download Contrato</a></li>
+
+          <li *ngIf="VerificaAnaliseCurricular(item.idFormaIngresso, item.statusAnalise)">
+            <a class="dropdown-item" role="button" codPsReq="{{pegarCodPsRequisito(item)}}"
+              (click)="onClickDownloadArquivo()">Download
+              Análise Curricular</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card height-100-porc"  [ngClass]="{'card-disabled':item.processoSeletivoEncerrado}">
+        <div class="card-body" (click)="item.processoSeletivoEncerrado ? null : onClickDetalheInscricao(item)">
+          <div class="d-flex align-items-left justify-content-between">
+            <p><strong>#{{item.codPsInscricao || item.codPsLead}}</strong></p>
+
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="info-data-inscricao">
+              <p>Realizada em
+                <strong>{{item.dataInscricao|date:'dd/MM/yyyy'}}</strong> às
+                <strong>{{item.dataInscricao|date:'HH:mm'}}</strong> horas
+              </p>
+            </div>
+            <span class="float-right badge"
+              [ngClass]="('bg-insc-'+item.etapaInscricao)">{{item.descricaoSituacao()}}</span>
+          </div>
+          <div *ngIf="item.statusMatricula" class="d-flex justify-content-end align-items-right">
+            <label class="bg-insc-3 badge">
+              <span class="d-flex justify-content-center align-items-center">
+                <strong>STATUS DA MATRICULA: <u>{{item.statusMatricula}}</u></strong>
+                <!-- <i class="material-icons ml-2" style="font-size: 17px;" tooltip="REFERENTE AO PERÍODO LETIVO"
+                  placement="top">help</i> -->
+              </span>
+            </label>
+          </div>
+          <hr />
+          <h4>{{item.curso}}</h4>
+          <p>{{item.periodoLetivo}}</p>
+          <p>{{item.formaIngresso}}
+            <br>
+            <ng-container *ngIf="item.formaIngresso == 'PROVA ON-LINE'; else Outros">
+              <ng-container *ngIf="statusProva == 'REPROVADO'">
+                <strong style="color:red">{{statusProva}}</strong> com nota <strong>{{prova?.notaRedacao}}</strong>
+              </ng-container>
+              <ng-container *ngIf="statusProva == 'APROVADO'">
+                <strong style="color:green">{{statusProva}}</strong> com nota <strong>{{prova?.notaRedacao}}</strong>
+              </ng-container>
+              <ng-container *ngIf="statusProva == 'PENDENTE'">
+                <strong style="color:blue">{{statusProva}}</strong>
+              </ng-container>
+            </ng-container>
+            <ng-template #Outros>
+              <br>
+            </ng-template>
+          </p>
+          <legend class="scheduler-border custom-legend-fam mb-0">Polo Educacional</legend>
+          <div class="row no-gutters m-0">
+            <div class="col w-100">
+              <h6 class="mt-2">{{item.campus}}</h6>
+              <p class="card-text"><small style="font-weight: unset;">{{item.enderecoCampus}} -
+                  {{item.bairroCampus}} - {{item.cidadeCampus}} - {{item.ufCampus}}
+                  <br>CEP: {{item.cepCampus | mask: '00000-000'}}</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

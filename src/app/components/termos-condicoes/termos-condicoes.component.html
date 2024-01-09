@@ -1,0 +1,9 @@
+<div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+    <div class="row mb-0">
+        <label class="f-size-termos">
+            <input type="checkbox"  [disabled]="disabled" [(ngModel)]="model.aceitenotificacoes" [(ngModel)]="model.aceitepoliticas" (change)="aceitartermoschecked($event)" required/>
+            <span>Aceito o <a href="javascript: void(0);" (click)="onClickTermoDeUso()" class=""><b>Termos de uso de dados</b></a> e <a href="javascript: void(0);" (click)="onClickPoliticasPrivacidade()" class=""><b>Políticas de
+                        privacidade</b></a>.</span>
+        </label>
+    </div>
+</div>

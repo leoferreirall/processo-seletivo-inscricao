@@ -1,0 +1,54 @@
+<div *ngIf="show">
+    <div class="form-row">
+        <div class="form-group col-md-12 mb-0 mt-4">
+            <legend class="scheduler-border custom-legend-fam mb-0 d-flex justify-content-start">Polos Educacionais</legend>
+            <hr class="m-0">
+        </div>
+    </div>
+    <!-- 
+<div class="form-row">
+    <div class="form-group col-md-12 d-flex justify-content-center align-items-center mb-0">
+        <p><small><label><i class="material-icons pr-2" style="font-size: 16px;">location_searching</i></label><label>Selecionar polo mais próximo da minha localização.</label></small></p>
+    </div>
+</div> -->
+
+    <div class="form-row">
+        <div class="form-group col-md-6 m-0">
+            <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                
+            </div>
+        </div>
+        <div class="form-group col-md-6 m-0">
+            <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <div class="input-field col s12  p-0 w-100 bd-highlight m-0">
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-3 w-auto" *ngIf="poloselecionado">
+        <div class="row no-gutters m-0">
+            <div class="col w-100">
+                <div class="card-body">
+                    <h6 class="mt-2">{{poloselecionado.nome}}</h6>
+                    <p class="card-text"><small style="font-weight: unset;">{{enderecopolo}}<br>CEP:
+                            {{poloselecionado.cep}}</small></p>
+                    <!-- <p class="card-text"><button type="button" class="btn btn-next btn-font-weight d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center bg-btn-gray" onclick="currentSlide(3)"><span class="d-flex align-items-center">Mais informações</span><span class="d-flex align-items-center"></span></button></p> -->
+                    <!-- <div class="switch mt-2">
+                    <label>
+                <input type="checkbox">
+                <span class="lever bg-btn-gray ml-0 mr-0"></span>
+            </label>
+                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

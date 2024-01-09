@@ -1,0 +1,53 @@
+<div *ngIf="mostrarCampanhas" class="form-row container-campanhas margin-top-20 margin-bottom-20">
+  <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="!campanhas || campanhas.length <= 0">
+    <p>Por favor, aguarde um instante que estamos preparando condições especiais para você!</p>
+  </div>
+  <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="campanhas && campanhas.length > 0">
+    <ul class="list-group mb-3 b-shadow" style="margin-bottom: 0px !important; ">
+      <li class="list-group-item d-flex justify-content-between lh-condensed bg-light"
+        *ngFor="let item of campanhas| slice:0:4; let i = index" id="{{item.parcela}}">
+        <div class="col-md-9">
+          <div class="text-left">
+            <h6 class="my-0"><i class="material-icons icon-min-2 text-success"
+                style="font-size: 15px;">monetization_on</i> <strong>{{item.nome}}</strong></h6>
+            <small class="text-muted" *ngIf="i < 3">{{item.parcela}}ª parcela</small>
+            <small class="text-muted" *ngIf="i == 3">{{item.parcela}}ª a {{campanhas.length}}ª parcela</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <span class="text-muted text-right">
+            <div *ngIf="item.temDesconto"><small class="text-danger">de <del>R$
+                </del><del>{{item.valor | currency:'BRL'}}</del></small><br></div>
+            <div class="text-right text-success"><strong> por </strong><strong>{{item.valorComDesconto |
+                currency:'BRL'}}</strong></div>
+          </span>
+        </div>
+      </li>
+    </ul>
+    <i class="fa-icon-plus fas fa-plus" data-toggle="modal" data-backdrop="static" data-target="#modal-default"></i>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Mensalidades</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group" *ngIf="this.campanhas != null">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of campanhas"
+            id="{{item.parcela}}">
+            <span>{{item.parcela}}ª parcela</span><span>{{item.nome}}</span>
+            <span>{{item.valorComDesconto | currency:'BRL'}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

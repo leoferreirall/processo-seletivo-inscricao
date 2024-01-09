@@ -1,0 +1,137 @@
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 form-box">
+  <div *ngIf="loadingInscricao">
+    <p>Carregando informações...</p>
+  </div>
+  <div *ngIf="!loadingInscricao">
+    <div class="col-sm-12" id="msg-info"
+      *ngIf="aceiteIndisponivel === true || (aceiteDisponivel && !possuiContrato) || processandoPagamento || pagamentoPendente || pagamentoRecebido || matriculado">
+      <div class="row ">
+        <div class="col-sm-12  col-md-12 col-lg-12 p-0">
+          <div class="callout"
+            [ngClass]="('callout-insc-'+ inscricao?.EtapaInscricao)">
+            <h7>{{eventMessage}}</h7>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12" id="msg-info" *ngIf="showInfoPagamento">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="d-flex justify-content-between align-items-center">
+            <h7>Detalhes do Pagamento <strong>#{{inscricao?.Pagamento?.IDPagto}}</strong></h7>
+            <span class="float-right badge bg-success" *ngIf="inscricao.Pagamento.SituacaoPagamento()===1">Pago</span>
+            <span class="float-right badge bg-warning" *ngIf="inscricao.Pagamento.SituacaoPagamento()===0">Em
+              processamento</span>
+          </div>
+          <hr>
+          <div *ngIf="!inscricao.foiInsento || !telaTaxaInscricao()">
+            <p>Pagamento realizado em
+              <strong>{{inscricao.Pagamento.DataPagamento|date:'dd/MM/yyyy'}}</strong> às
+              <strong>{{inscricao.Pagamento.DataPagamento|date:'HH:mm'}}</strong> horas
+            </p>
+
+            <p><strong>Valor pago {{inscricao.Pagamento.Valor| currency:'BRL'}} em
+                {{inscricao.Pagamento.Parcela}} parcela(s).</strong></p>
+          </div>
+
+          <div *ngIf="inscricao.foiInsento && telaTaxaInscricao()">
+            <p>Insenção realizada em
+              <strong>{{inscricao.Pagamento.DataPagamento|date:'dd/MM/yyyy'}}</strong> às
+              <strong>{{inscricao.Pagamento.DataPagamento|date:'HH:mm'}}</strong> horas
+            </p>
+
+            <p><strong>Valor insento {{inscricao.Pagamento.Valor| currency:'BRL'}} em
+                {{inscricao.Pagamento.Parcela}} parcela(s).</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showContrato">
+      <app-contrato [codBolsa]="detalheInscricao.codBolsa" [uidi]="uidi" [show]="showContrato" (complete)="aceiteContratoConcluido($event)">
+      </app-contrato>
+      <div class="d-inline w-100" style="margin-top: 10px;">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end mb-4">
+          <button type="button"
+            class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+            (click)="visualizarContrato()"><span class="d-flex align-items-center">Ler contrato e finalizar
+              matrícula</span>
+            <!-- <span class="d-flex align-items-center">
+                    <i class="material-icons prefix w-auto pl-2">arrow_forward</i></span> -->
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESSE BUTTON SERÁ APENAS PARA AS INSCRIÇÕES INSENTAS -->
+    <div *ngIf="insentoInscricao" class="row">
+      <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+        <button type="button"
+          class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+          (click)="efetuarProcessoInsencao()"><span class="d-flex align-items-center">Confirmar</span>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="showPagamento && !insentoInscricao">
+      <app-extrato-pagamento [extrato]="extratoPagamento"
+        [codPsInscricao]="detalheInscricao.codPsInscricao"></app-extrato-pagamento>
+      <div *ngIf="showPagamento && pagamentoPendente" class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="item row m-0 d-flex mt-0">
+            <div class="col-md-12 col-xs-12 col-sm-12 p-0 mb-3">
+              <div class="row m-0">
+                <div class="col-md d-flex justify-content" *ngIf="detalheInscricao.processoSeletivo != 'MEDICINA'">
+                  <label class="f-size-termos">
+                    <input type="radio" name="formaPagamento" id="cartao" [(ngModel)]="formaPagamento" [value]="1"
+                      required />
+                    <span class="d-flex justify-content"> Cartão de Crédito /
+                      Débito</span>
+                  </label>
+                </div>
+                <div class="col-md d-flex justify-content">
+                  <label class="f-size-termos">
+                    <input type="radio" name="formaPagamento" id="boleto" [(ngModel)]="formaPagamento" [value]="2"
+                      required checked />
+                    <span class="d-flex justify-content"> Boleto</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showPagamento && pagamentoPendente" class="row">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <button *ngIf="formaPagamento == 1" type="button"
+            class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+            (click)="efetuarPagamento()"><span class="d-flex align-items-center">Realizar pagamento</span>
+            <!-- <span class="d-flex align-items-center">
+                    <i class="material-icons prefix w-auto pl-2">arrow_forward</i></span> -->
+          </button>
+          <button *ngIf="formaPagamento == 2 && !acesso" type="button"
+            class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+            (click)="emitirBoleto()"><span class="d-flex align-items-center">Emitir boleto</span>
+            <!-- <span class="d-flex align-items-center">
+                    <i class="material-icons prefix w-auto pl-2">arrow_forward</i></span> -->
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngIf="acesso && formaPagamento == 2">
+        <div role="alert" class="alert alert-warning col-md-12 text-center mt-5">
+          <strong>A emissão do boleto deverá ser realizado pelo candidato</strong>
+        </div>
+      </div>
+
+      <app-pagamento-cartao (complete)="pagamentoConcluido($event)"></app-pagamento-cartao>
+      <app-pagamento-boleto (complete)="pagamentoConcluido($event)"></app-pagamento-boleto>
+    </div>
+
+    <!-- <div *ngIf="showContrato || showPagamento">
+            <app-planos-condicoes [disabled]="!permiteEdicao" [showConvenios]="false" [loadOnInit]="true" [codbolsa]="inscricao.codBolsa"
+                [uidi]="uidi" [uidl]="uidl"></app-planos-condicoes>
+        </div> -->
+  </div>
+</div>

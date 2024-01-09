@@ -1,0 +1,167 @@
+<ng-template #modal let-modal>
+  <div class="modal-header p-0">
+    <div class="col-md-12" style="text-align: right; cursor: pointer;">
+      <a (click)="close()" style="color: #FF8400;">
+        <i class="material-icons lh-18">close</i>
+      </a>
+    </div>
+  </div>
+  <div class="modal-body pb-0">
+    <div class="row h-100 container-mg-fx mb-0">
+      <div class="col-lg-6 bg-container-description">
+        <div class="card-body bg-description">
+          <div class="container mt-0">
+            <div class="d-flex justify-content-center">
+              <div class="p-2">
+                <div class="logo_fam"></div>
+              </div>
+            </div>
+          </div>
+          <h3>Informações sobre a transação.</h3>
+          <ul class="list-group">
+            <li class="list-group-item"><i class="fas fa-lock text-muted mr-2"></i>Este site possui certificado de
+              segurança para a proteção de envio e recebimento de dados.</li>
+            <li class="list-group-item"><i class="fas fa-check-circle text-muted mr-2"></i>Preencha corretamente todos
+              os dados do formulário para efetuar o pagamento com cartão de crédito.</li>
+          </ul>
+          <ul class="list-group mb-3" id="Totalizer">
+            <li *ngIf="lancamento.parcela > 0" class="list-group-item d-flex justify-content-between">
+              <span>Pagamento da parcela</span>
+              <strong id="ChargeTotal">{{lancamento.parcela}}</strong>
+            </li>
+            <li *ngIf="lancamento.parcela == 0" class="list-group-item d-flex justify-content-between">
+              <span>Pagamento da taxa de inscrição</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between bg-light">
+              <div>
+                <h6 class="my-0">Valor</h6>
+                <small>TOTAL</small>
+              </div>
+              <span>{{lancamento.valorPlano | currency:'BRL':
+                true }}</span>
+            </li>
+            <li *ngIf="lancamento.valorDesconto > 0" class="list-group-item d-flex justify-content-between bg-light">
+              <div class="text-success">
+                <h6 class="my-0">Decréscimo</h6>
+                <small>DESCONTO</small>
+              </div>
+              <span class="text-success">-{{lancamento.valorDesconto | currency:'BRL': true }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total a pagar (BRL)</span>
+              <strong id="ChargeTotal">{{lancamento.valorTotal | currency:'BRL': true }}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card mb-4 mt-0 shadow-sm">
+          <div class="card-body bg-container-checkout pt-0">
+            <div class="col">
+              <h2>Pagamento</h2>
+              <p>Informações sobre o pagamento.</p>
+              <hr />
+              <form id="form" #form="ngForm" name="form" (ngSubmit)="form.valid && onSubmitFormPagamento(cartao)">
+                <div class="form-group paymentOptions mb-0">
+                  <div class="row mb-0">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-0">
+                      <div class="item row m-0 d-flex justify-content-center mt-0 mb-0">
+                        <div class="col-md-12 col-xs-12 col-sm-12 p-0 mb-0">
+                          <div class="row m-0">
+                            <div class="col d-flex justify-content-center">
+                              <label class="f-size-termos mb-0">
+                                <input type="radio" name="PaymentType" id="PaymentTypeCredit"
+                                  (change)="onChangeTipoCartao()" [(ngModel)]="cartao.tipoCartao" [value]="2" required
+                                  checked />
+                                <span class="d-flex justify-content-center"> Crédito</span>
+                              </label>
+                            </div>
+                            <div class="col d-flex justify-content-center">
+                              <label class="f-size-termos mb-0">
+                                <input type="radio" name="PaymentType" id="PaymentTypeDebit"
+                                  (change)="onChangeTipoCartao()" [(ngModel)]="cartao.tipoCartao" [value]="3"
+                                  required />
+                                <span class="d-flex justify-content-center"> Débito</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                      <input id="cardNumber" name="cardNumber" type="text" class="validate" mask="0000000000000000999"
+                        [(ngModel)]="cartao.numeroCartao" #cardNumber="ngModel" required maxlength="19" />
+                      <label for="cardNumber" class="font-weight-normal">Número do
+                        cartão</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div class="input-field col s12  p-0 w-100 bd-highlight mt-0 mb-0">
+                      <input type="text" name="holder" id="holder" class="validate" [(ngModel)]="cartao.nome"
+                        #holder="ngModel"
+                        [ngClass]="{ 'border-danger': holder.invalid && (holder.dirty || holder.touched || form.submitted) }"
+                        required maxlength="100">
+                      <label for="holder" class="font-weight-normal">Titular do cartão</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <div class="input-field col s12  p-0 w-100 bd-highlight mt-0 mb-0">
+                      <input type="text" name="expirationDate" id="expirationDate" class="validate"
+                        [dropSpecialCharacters]="false" mask="00/0000" [(ngModel)]="cartao.validade"
+                        #expirationDate="ngModel"
+                        [ngClass]="{ 'border-danger': expirationDate.invalid && (expirationDate.dirty || expirationDate.touched || form.submitted) }"
+                        required maxlength="7">
+                      <label for="expirationDate" class="font-weight-normal">Validade</label>
+                      <span class="helper-text">mm/aaaa</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <div class="input-field col s6  p-0 w-100 bd-highlight mt-0 mb-0">
+                      <input type="text" name="securityCode" id="securityCode" class="validate"
+                        [(ngModel)]="cartao.cvv" mask="0009" #securityCode="ngModel"
+                        [ngClass]="{ 'border-danger': securityCode.invalid && (securityCode.dirty || securityCode.touched || form.submitted) }"
+                        required minlength="3" maxlength="4">
+                      <label for="securityCode" class="font-weight-normal">CVV</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row col-md-12">
+                  <div class="form-group col-md-12 p-0" *ngIf="cartao.tipoCartao == 2">
+                    <div class="input-field col s12  p-0 bd-highlight mb-0 mt-0 select-focus">
+                      <select name="Installments" id="Installments" class="mt-5" [(ngModel)]="cartao.qtdParcelas">
+                        <option *ngFor="let item of listaParcelas; let i = index" [ngValue]="i + 1">{{i + 1}} x
+                          {{item | currency:'BRL': true}}</option>
+                      </select>
+                      <label for="Installments"
+                        class="font-weight-normal d-flex justify-content-start">Parcelamento</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!acesso" class="form-row">
+                  <button type="submit"
+                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                    id="btn-finalize-payment">Finalizar
+                    pagamento</button>
+                </div>
+                <div class="row" *ngIf="acesso">
+                  <div role="alert" class="alert alert-warning col-md-12 text-center">
+                    <strong>O pagamento deverá ser realizado pelo cadidato.</strong>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

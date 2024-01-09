@@ -1,0 +1,146 @@
+<ng-container *ngIf="statusreq !== null && statusreq !== status.Pendente">
+  <ng-container *ngIf="statusreq === status.PendenteCorrecao">
+    <div class="row">
+      <div class="col-md-12 text-left">
+        <p>Recebemos sua avaliação!</p>
+        <p>Você poderá acompanhar por aqui a correção de sua prova.</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="statusreq === status.Aprovado">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h4 style='color: #ff5900;'>Parabéns!</h4>
+        <p>Você foi aprovado e poderá continuar com o processo de inscrição.</p>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container
+  *ngIf="(statusreq === null || statusreq === status.Pendente || statusreq === status.Reprovado) && detalheInscricao.processoSeletivo == 'MEDICINA'">
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h5>Seja bem-vindo(a) à FAM, para o curso de {{curso}}.
+      </h5>
+      <br>
+      <p>Você receberá em seu e-mail as informações para realização da sua prova.</p>
+    </div>
+  </div>
+</ng-container>
+<ng-container
+  *ngIf="(statusreq === null || statusreq === status.Pendente || statusreq === status.Reprovado) && detalheInscricao.requisito.codPsTipoRequisito == tipoRequisitoEnum.AvaliacaoVestibular100">
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h5>Seja bem-vindo(a) à FAM, para o curso de {{curso}}.
+      </h5>
+      <br>
+      <p>Parabéns! <br>Você concluiu a sua inscrição no Vestibular FAM 100% com sucesso. <br>Anote o horário e local da
+        prova: dia 6/11, às 13h, na Rua Borges de Figueiredo – 510. <br>Campus Mooca. Chegue com antecedência: abertura
+        dos portões às 12h. <br>Esperamos por você!</p>
+    </div>
+  </div>
+</ng-container>
+<ng-container
+  *ngIf="(statusreq === null || statusreq === status.Pendente || statusreq === status.Reprovado) && detalheInscricao.processoSeletivo != 'MEDICINA' && detalheInscricao.requisito.codPsTipoRequisito != tipoRequisitoEnum.AvaliacaoVestibular100">
+  <ng-container *ngIf="provaIniciada===false">
+    <div class="row">
+      <div class="col-md-12 text-left">
+        <h5>
+          Seja bem-vindo(a) à FAM, para o curso de {{curso}}.
+        </h5>
+        <p>
+          Prepare-se para iniciar sua prova, ela é composta de uma redação de 1.000 a 2.000 caracteres.
+        </p>
+        <p style='color: #ff5900;'>
+          <strong>Atente-se ao tempo! O prazo para conclusão se encerra em 60 minutos decorridos do seu início.</strong>
+        </p>
+        <p>
+          De acordo com a LEI Nº 12.853, DE 14 DE AGOSTO DE 2013, que dispõe sobre direitos autorais, cuidado para não cometer plágio.
+        </p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!acesso">
+      <div class="col-md-12">
+        <button type="submit" (click)="IniciarProva()"
+          class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange">
+          <i class="material-icons small left">access_alarm</i> Iniciar prova
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center">
+        <strong>A prova deverá ser realizada pelo cadidato.</strong>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="provaIniciada===true">
+    <div *ngIf="carregando">
+      <div class="col-sm-12" *ngIf="carregando">
+        <p>{{msgcarregando}}</p>
+      </div>
+    </div>
+    <div *ngIf="carregando === false">
+      <div class="row">
+        <div class="col-sm-12 d-flex justify-content-center align-items-center">
+          <countdown #cd [config]="config" (event)="handleEvent($event)"></countdown>
+        </div>
+      </div>
+      <div *ngIf="redacaoativa === false">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>Proposta de redação</h3>
+            <img [src]="enunciado?.urlImagem">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" [innerHtml]="enunciado?.descricao">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 d-flex justify-content-center">
+            <button type="submit" (click)="redacaoativa=true"
+              class="btn btn-next d-flex align-items-center  justify-content-center btn-orange">
+              <i class="material-icons small left">description</i> Ir para redação
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="redacaoativa === true">
+        <form #formRedacao="ngForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-field col s12 p-0 w-100 bd-highlight mt-2 mb-0">
+                <input name="titulo" maxlength="255" id="titulo" type="text" blockCopyPaste [(ngModel)]="prova.titulo"
+                  #titulo required>
+                <label for="titulo" class="font-weight-normal">* Título da redação...</label>
+              </div>
+              <textarea id="redacao" placeholder="* Digite aqui sua redação..." blockCopyPaste name="redacao"
+                [(ngModel)]="prova.redacao" rows="20" class="form-control" minlength="1000" maxlength="2000" #redacao
+                required></textarea>
+              <div class="p-0 w-100 d-flex justify-content-left mt-2 mb-0">
+                <label><strong>{{2000 - RemoveExtraSpaces(prova.redacao).length}}</strong> caracteres restantes</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 d-flex justify-content-center">
+              <button type="button" (click)="redacaoativa=false"
+                class="btn btn-next d-flex align-items-center  justify-content-center btn-orange">
+                <i class="material-icons small left">arrow_back</i> Voltar
+              </button>
+            </div>
+            <div class="col-md-6 d-flex justify-content-center">
+              <button type="submit" [disabled]="formRedacao.invalid"
+                class="btn btn-next d-flex align-items-center  justify-content-center btn-orange">
+                <i class="material-icons small left">check</i> Concluir
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

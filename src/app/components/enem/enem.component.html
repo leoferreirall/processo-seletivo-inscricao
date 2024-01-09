@@ -1,0 +1,108 @@
+<ng-container *ngIf="statusreq !== null && statusreq !== 0">
+  <ng-container *ngIf="statusreq === 14">
+    <div class="row">
+      <div class="col-md-12 text-left">
+        <p>Recebemos suas notas!</p>
+        <p>Você poderá acompanhar o processo de análise por aqui.</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="statusreq === 12 && detalheInscricao.prazoInscricaoEncerrado">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h4 style='color: #ff5900;'>Parabéns!</h4>
+        <p>Você foi aprovado e poderá continuar com o processo de inscrição.</p>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="statusreq === null || statusreq === 0 || !detalheInscricao.prazoInscricaoEncerrado">
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h5>Seja bem-vindo(a) à FAM, Processo Seletivo {{detalheInscricao.periodoLetivo}} para o curso de
+        {{detalheInscricao.curso}}.
+      </h5>
+      <p>Para continuar com sua inscrição, será necessário informar o ano e nota do ENEM que deseja utilizar.
+      </p>
+      <p style='color: #ff5900;'><strong>Fique atento no prazo de inscrição do processo seletivo e aos que
+          informados!</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h4>Informe os dados do seu ENEM</h4>
+    </div>
+  </div>
+  <form #formEnem="ngForm" (ngSubmit)="formEnem.valid && onSubmit(model)">
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <app-drop-down-list name="ano" #ano [title]="'Ano'" [itens]="anos" [show]="true"
+          [defaultvalue]="'Selecione o ano'" (selectChange)="onChangeAno($event)">
+        </app-drop-down-list>
+      </div>
+    </div>
+    <!--<div class="form-row" *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA'">
+            <div class="form-group col-md-12">
+                <legend class="scheduler-border custom-legend-fam mb-0">Notas</legend>
+                <hr class="mt-0">
+            </div>
+        </div>
+        <div class="form-row" *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA'">
+            <div class="form-group  col-md-6">
+                <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <input id="notaGeral" name="notaGeral" type="text" class="validate" [(ngModel)]="model.notaGeral"
+                        #notaGeral="ngModel" required [specialCharacters]="[ '.' ]" mask="9999" />
+                    <label for="notaGeral" class="font-weight-normal">Nota Geral</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <input id="notaRedacao" name="notaRedacao" type="text" class="validate" [(ngModel)]="model.notaRedacao"
+                        #notaRedacao="ngModel" required [specialCharacters]="[ '.' ]" mask="9999" />
+                    <label for="notaRedacao" class="font-weight-normal">Redação</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <input id="notaHumanas" name="notaHumanas" type="text" class="validate" [(ngModel)]="model.notaHumanas"
+                        #notaHumanas="ngModel" required [specialCharacters]="[ '.' ]" mask="9999" />
+                    <label for="notaHumanas" class="font-weight-normal">Ciências Humanas</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <input id="notaLinguagem" name="notaLinguagem" type="text" class="validate" [(ngModel)]="model.notaLinguagem"
+                        #notaLinguagem="ngModel" required [specialCharacters]="[ '.' ]" mask="9999" />
+                    <label for="notaLinguagem" class="font-weight-normal">Linguagens e Códigos</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <input id="notaNatureza" name="notaNatureza" type="text" class="validate" [(ngModel)]="model.notaNatureza"
+                        #notaNatureza="ngModel" required [specialCharacters]="[ '.' ]" mask="9999" />
+                    <label for="notaNatureza" class="font-weight-normal">Ciências da Natureza</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <input id="notaMatematica" name="notaMatematica" type="text" class="validate" [(ngModel)]="model.notaMatematica"
+                        #notaMatematica="ngModel" required [specialCharacters]="[ '.' ]" mask="9999" />
+                    <label for="notaMatematica" class="font-weight-normal">Matemática</label>
+                </div>
+            </div>
+        </div>-->
+    <div *ngIf="!acesso" class="d-inline w-100">
+      <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+        <button type="submit" [disabled]="formEnem.invalid"
+          class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"><span
+            class="d-flex align-items-center">Confirmar</span><span class="d-flex align-items-center"></span></button>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center mt-5">
+        <strong>O envio deverá ser efetuado pelo candidato.</strong>
+      </div>
+    </div>
+  </form>
+</ng-container>

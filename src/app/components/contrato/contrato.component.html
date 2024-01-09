@@ -1,0 +1,55 @@
+<ng-template #modal let-modal *ngIf="show">
+    <div class="modal-header p-0">
+        <h4 class="modal-title">Contrato</h4>
+        <div class="col-md-11" style="text-align: right; cursor: pointer;">
+            <a (click)="close()" style="color: #FF8400;">
+                <i class="material-icons lh-18">close</i>
+            </a>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="col-sm-12" *ngIf="carregando">
+            <p>{{msgcarregando}}</p>
+        </div>
+
+        <!-- <ng-content></ng-content> -->
+        <!-- <div class="row contrato-content"> -->
+        <div class="col-sm-12" *ngIf="!carregando">
+            <div [innerHTML]="this.contrato.documento" *ngIf="this.contrato!=null">
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="modal-footer" *ngIf="!carregando && !acesso" style="height: 140px">
+        <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="this.contrato!=null">
+            <div class="form-row">
+                <div class="col-md-12 align-self-center">
+                    <div class="row ml-0 mt-0 mb-0 mr-auto">
+                        <label class="m-0">
+                            <input type="checkbox" [(ngModel)]="aceitecontrato" />
+                            <span>Li o contrato e quero fazer minha matrícula online</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12 align-self-center margin-top-20">
+                    <div class="row mb-0">
+                        <div class="d-inline w-100">
+                            <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-center">
+                                <button type="submit"
+                                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                                    [disabled]="!aceitecontrato" (click)="onClickAceitarContrato()"><span
+                                        class="d-flex align-items-center">Fazer minha
+                                        matrícula online!</span><span class="d-flex align-items-center"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center mt-5">
+        <strong>O aceite de contrato deverá ser efetuado pelo candidato.</strong>
+      </div>
+    </div>
+</ng-template>

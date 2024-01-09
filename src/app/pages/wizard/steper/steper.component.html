@@ -1,0 +1,49 @@
+<div class="form-page-container bg-white">
+    <app-steps></app-steps>
+    <div class="step-page-container m-0">
+        <div class="form-step">
+            <ng-container [ngSwitch]="(currentStep | async)?.stage">
+                <ng-container *ngSwitchCase="stageEnum.Cadastro">
+                    <app-cadastro></app-cadastro>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.DadosComplementares">
+                    <app-complemento></app-complemento>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.TaxaInscricao">
+                    <app-pagamento></app-pagamento>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.Pagamento">
+                    <app-pagamento></app-pagamento>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.Avaliacao">
+                    <app-forma-ingresso></app-forma-ingresso>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.Historico">
+                    <app-forma-ingresso></app-forma-ingresso>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.PortadorDiploma">
+                    <app-forma-ingresso></app-forma-ingresso>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.Enem">
+                    <app-forma-ingresso></app-forma-ingresso>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.Transferencia">
+                    <app-forma-ingresso></app-forma-ingresso>
+                </ng-container>
+                <ng-container *ngSwitchCase="stageEnum.Documentacao">
+                    <app-forma-ingresso></app-forma-ingresso>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 1)" size="medium" color="#fd7e14" type="ball-scale-pulse" name="edit" [fullScreen]="true">
+    <p style="color:#fff">Estamos carregando seus dados. Por favor, aguarde!<br>Isso pode demorar alguns segundos...</p>
+</ngx-spinner>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 1)" size="medium" color="#fd7e14" type="ball-scale-pulse" name="contrato" [fullScreen]="true">
+    <p style="color:#fff">Por favor aguarde, estamos preparando tudo...</p>
+</ngx-spinner>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fd7e14" type="ball-scale-pulse" [fullScreen]="true"></ngx-spinner>

@@ -1,0 +1,22 @@
+<div class="col-sm-12 col-md-12 col-lg-12 " *ngIf="show">
+    <div class="item row m-0 d-flex justify-content-center mt-0">
+        <div class="col-md-12 col-xs-12 col-sm-12 p-0 mb-3">
+            <div class="row m-0">
+                <div class="col d-flex justify-content-center">
+                    <label class="f-size-termos">
+                        <input type="radio" name="formaPagamento" [value]="1" id="cartao"
+                            [(ngModel)]="formaPagamento" required />
+                        <span class="d-flex justify-content-center"> Cartão de Crédito / Débito</span>
+                    </label>
+                </div>
+                <div class="col d-flex justify-content-start">
+                    <label class="f-size-termos">
+                        <input type="radio" name="formaPagamento" [value]="2" id="boleto"
+                            [(ngModel)]="formaPagamento" required />
+                        <span class="d-flex justify-content-center"> Boleto</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

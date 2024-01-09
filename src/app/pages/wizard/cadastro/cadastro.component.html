@@ -1,0 +1,69 @@
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 form-box">
+    <form #form="ngForm" (ngSubmit)="form.valid && onSubmit()" novalidate>
+        <app-dados-pessoais [disabled]="!permiteEdicao" [form]="form"></app-dados-pessoais>
+
+        <app-drop-down-list #procsel [disabled]="!permiteEdicao" [name]="'processoseletivo'"
+            [title]="'Processo Seletivo'" [itens]="processosseletivos"
+            [defaultvalue]="'Selecione uma modalidade de ensino'" [presetvalue]="edit?processoselecionado :null"
+            (selectChange)="onChangePsel($event)" [required]="true">
+        </app-drop-down-list>
+        <app-drop-down-list #calendario [disabled]="!permiteEdicao" [name]="'calendario'"
+            [title]="'Período de ingresso'" [show]="showPeriodoIngresso" [itens]="calendarios"
+            [defaultvalue]="'Selecione o período de ingresso'" (selectChange)="onChangeCalendario($event)"
+            [required]="true">
+        </app-drop-down-list>
+        <app-drop-down-list #curso [disabled]="!permiteEdicao" [name]="'curso'" [title]="'Curso'" [show]="showCurso"
+            [itens]="cursos" [defaultvalue]="'Selecione um curso'" (selectChange)="onChangeCurso($event)"
+            [required]="true">
+        </app-drop-down-list>
+        <app-drop-down-list #turno [disabled]="!permiteEdicao" [name]="'turno'" [title]="'Turno'" [show]="showTurno"
+            [itens]="turnos" [defaultvalue]="'Selecione um turno'" (selectChange)="onChangeTurno($event)"
+            [required]="true">
+        </app-drop-down-list>
+        <app-drop-down-list #formaingresso [disabled]="!permiteEdicao" [name]="'formaingresso'"
+            [show]="cursoselecionado" [title]="'Forma de Ingresso'" [itens]="formasingressos"
+            [defaultvalue]="'Selecione uma forma de ingresso'" (selectChange)="onChangeFormaIngresso($event)"
+            [required]="true">
+        </app-drop-down-list>
+
+        <div class="form-row"
+            *ngIf="formaingressoselecionada && processoselecionado.idCategoriaPs != 3 && processoselecionado.idCategoriaPs != 9 && processoselecionado.idCategoriaPs != 5">
+            <div class="form-group col-md-12">
+                <legend class="scheduler-border custom-legend-fam mb-0">Polos Educacionais</legend>
+                <hr class="mt-0">
+            </div>
+            <div class="form-group col-md-6 m-0">
+                <app-drop-down-list #estado [disabled]="disabled" name="estado" [title]="'Estado'" [itens]="estados"
+                    [defaultvalue]="'Selecione um estado'" (selectChange)="onChangeEstado($event)">
+                </app-drop-down-list>
+            </div>
+            <div class="form-group col-md-6 m-0">
+                <app-drop-down-list #cidade [disabled]="disabled" name="cidade" [title]="'Cidade'" [itens]="cidades"
+                    [defaultvalue]="'Selecione uma cidade'" (selectChange)="onChangeCidade($event)">
+                </app-drop-down-list>
+            </div>
+            <div class="form-group col-md-12 m-0">
+                <app-drop-down-list #polo [disabled]="disabled" name="polo" [title]="'Polo'" [itens]="polos"
+                    [defaultvalue]="'Selecione um polo'" (selectChange)="onChangePolo($event)">
+                </app-drop-down-list>
+            </div>
+        </div>
+
+        <app-termos-condicoes  [hidden]="!poloselecionado" [disabled]="!permiteEdicao" (termosaceitos)="aceitartermos($event)">
+        </app-termos-condicoes>
+
+        <div class="d-inline w-100">
+            <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+                <button type="submit"
+                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                    [disabled]="!permiteEdicao || form.invalid || !termosaceitos || !formaingressoselecionada || !poloselecionado"><span
+                        class="d-flex align-items-center">Confirmar e prosseguir</span><span
+                        class="d-flex align-items-center"><i
+                            class="material-icons prefix w-auto pl-2">arrow_forward</i></span></button>
+            </div>
+        </div>
+        <label class="mt-4" *ngIf="!loggedIn">
+            Já possui inscrição? <a [routerLink]="['/painel-do-candidato']">Ir para o Painel do Candidato</a>
+        </label>
+    </form>
+</div>

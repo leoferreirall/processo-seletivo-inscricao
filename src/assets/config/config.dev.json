@@ -1,0 +1,25 @@
+{
+    "production": false,
+    "urlApiUsuarios": "http://f-ado-tsdes01.crefisa.com.br:8076",
+    "usrlApiPsel": "https://localhost:44355",
+    "urlApiPagamento": "http://f-ado-tsdes01.crefisa.com.br:8071",
+    "pagamento": {
+        "qtdMaxParcelas": 4,
+        "valorMinParcela": 100
+    },
+    "tableOptions": {
+        "bLengthChange": false,
+        "pagingType": "full_numbers",
+        "responsive": true,
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "pageLength": 10,
+        "language": {
+          "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        },
+        "classes": {
+          "sPageButton": ""  
+        }
+    }
+}

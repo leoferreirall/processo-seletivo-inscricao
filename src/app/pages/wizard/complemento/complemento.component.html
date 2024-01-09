@@ -1,0 +1,61 @@
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 form-box">
+  <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <app-dados-complementares [disabled]="!permiteEdicao" (changeOption)="onChangeOption($event)">
+    </app-dados-complementares>
+    <app-deficiencia [disabled]="!permiteEdicao"></app-deficiencia>
+    <app-endereco [disabled]="!permiteEdicao" (changeendereco)="onChangeEndereco($event)"></app-endereco>
+
+    <div class="form-row" *ngIf="verificaMenorIdade() || detalheInscricao?.processoSeletivo == 'MEDICINA'">
+      <div class="form-group col-md-12">
+        <legend class="scheduler-border custom-legend-fam mb-0">Dados do responsável financeiro</legend>
+        <hr class="mt-0">
+      </div>
+    </div>
+    <app-dados-pessoais *ngIf="verificaMenorIdade() || detalheInscricao.processoSeletivo == 'MEDICINA'"
+      [responsavel]="true" [disabled]="!permiteEdicao"></app-dados-pessoais>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <legend class="scheduler-border custom-legend-fam mb-0">Cupom promocional</legend>
+        <hr class="mt-0">
+      </div>
+    </div>
+    <app-cupom-promocional ></app-cupom-promocional>
+
+    <ng-container
+      *ngIf="isBlackFAMDayBool && detalheInscricao.processoSeletivo != 'MEDICINA'; then configBlackFAMday else desconfigBlackFAMday"></ng-container>
+    <ng-template #configBlackFAMday>
+      <div class="div-banner-black-famday d-flex justify-content-center align-self-end">
+        <img id="img-banner-black-famday">
+      </div>
+      <ng-container *ngIf="isBlackFAMDay()"></ng-container>
+    </ng-template>
+    <ng-template #desconfigBlackFAMday>
+      <ng-container *ngIf="isNotBlackFAMDay()">
+      </ng-container>
+    </ng-template>
+
+    <!-- SÓ MOSTRAR ESSA DIV SE FOR DIFERENTE DE IFOOD -->
+    <app-planos-condicoes [ngClass]="{'ocultar':InscricaoIfood()}" [disabled]="!permiteEdicao"
+      [showPlano]="detalheInscricao.idFormaIngresso != 6" [showConvenios]="detalheInscricao.idFormaIngresso != 6"
+      [uidl]="uidl" [loadOnInit]="true" [uidi]="uidi">
+    </app-planos-condicoes>
+
+    <div class="row" *ngIf="detalheInscricao.idFormaIngresso != 6 && !InscricaoIfood()">
+      <div class="col-md-12 text-center text-danger">
+        <p><small>* Os valores indicados acima correspondem às parcelas do primeiro semestre do
+            curso</small></p>
+      </div>
+    </div>
+
+    <div class="d-inline w-100 mt-3">
+      <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+        <button type="submit"
+          class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+          [disabled]="!permiteEdicao || form.invalid"><span class="d-flex align-items-center">Finalizar</span><span
+            class="d-flex align-items-center"><i
+              class="material-icons prefix w-auto pl-2">arrow_forward</i></span></button>
+      </div>
+    </div>
+  </form>
+</div>

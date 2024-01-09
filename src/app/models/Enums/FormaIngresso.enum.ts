@@ -1,0 +1,8 @@
+export enum FormaIngresso {
+    PORTADOR_DE_DIPLOMA = 1,
+    PROVA_ON_LINE,
+    TRANSFERENCIA,
+    ENEM,
+    PROVA_PRESENCIAL,
+    VESTIBULAR,
+}

@@ -1,0 +1,87 @@
+<div class="div-side-banner-blackfamday-left col-2 col-sm-2 col-md-3 col-lg-3">
+  <div class="div-side-banner-container-left row m-0">
+    <ng-container *ngIf="isBlackFAMDayBool && ps != 'MEDICINA'">
+      <ng-container [ngSwitch]="(currentStep | async)?.stage">
+        <ng-container *ngSwitchCase="stageEnum.Cadastro">
+          <img id="img-side-black-famday-left">
+          <ng-container *ngIf="isBlackFAMDay()">
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.DadosComplementares">
+            <img id="img-side-black-famday-left">
+            <ng-container *ngIf="isBlackFAMDay()">
+            </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <ng-container *ngIf="isNotBlackFAMDay()">
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+<div class="app_container col-8 col-sm-8 col-md-6 col-lg-6">
+  <div class="form-box">
+    <div class="card p-4">
+        <div class="card-body p-0">
+            <div class="row m-0">
+                <div class="col-md-1" style="text-align: left;" *ngIf="isLogged() || acesso">
+                    <a style="color: #FF8400; cursor: pointer" (click)="close()">
+                        <i class="material-icons lh-18">close</i>
+                    </a>
+                </div>
+                <div class="col-md-12 mb-4" style="text-align: center; color: #FF8400;" *ngIf="!isLogged()">
+                    Já possui inscrição? <a [routerLink]="['/painel-do-candidato']">Ir para o Painel do Candidato</a>
+                </div>
+            </div>
+            <div class="banner d-flex justify-content-center align-self-end">
+                <div class="row m-0">
+                    <div class="logo mt-0"></div>
+                </div>
+            </div>
+
+            <app-steper></app-steper>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 bg-gray-footer-fieldset mb-0 mt-4">
+                <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 form-box">
+
+                    <div class="row mb-0 d-flex justify-content-center">
+                        <label class="f-size-termos mt-4">
+                            <span>
+                                <a href="javascript: void(0);" (click)="onClickPoliticasPrivacidade()"
+                                    class="mr-2 ml-0"><b>Políticas de privacidade</b></a>
+                            </span>
+                            |
+                            <span>
+                                <a href="javascript: void(0);" (click)="onClickTermoDeUso()" class="ml-2 mr-0"><b>Termos
+                                        de uso de dados</b></a>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="row mb-0 d-flex justify-content-center">
+                        <label class="f-size-termos mb-4">
+                            © {{anoAtual}} - Centro Universitário FAM.
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="div-side-banner-blackfamday-right col-2 col-sm-2 col-md-3 col-lg-3">
+  <div class="div-side-banner-container-right row m-0">
+    <ng-container *ngIf="isBlackFAMDayBool && ps != 'MEDICINA'">
+      <ng-container [ngSwitch]="(currentStep | async)?.stage">
+        <ng-container *ngSwitchCase="stageEnum.Cadastro">
+          <img id="img-side-black-famday-right">
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.DadosComplementares">
+          <img id="img-side-black-famday-right">
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

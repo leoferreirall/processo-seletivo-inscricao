@@ -1,0 +1,97 @@
+<div *ngIf="pedirCpf || pedirNovaSenha" class="container-fluid">
+  <div class="container ">
+    <div class="row cdvfdfd">
+      <div class="col-lg-12 col-md-12 login-box p-0">
+        <div class="row m-0">
+          <div class="col-lg-6 col-md-6 log-det">
+            <div class="small-logo logo">
+            </div>
+            <!-- FORMULÁRIO PARA VALIDAR O CPF -->
+            <div name="grupoCpf" *ngIf="pedirCpf">
+              <p class="dfmn">Por favor digite o seu CPF</p>
+              <div class="text-box-cont">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <input [(ngModel)]="hashModel.cpf" type="text" class="form-control ipt_login" name="cpf"
+                    placeholder="CPF" aria-label="CPF" mask="CPF_CNPJ" maxlength="14" />
+                </div>
+                <div class="input-group center">
+                  <button (click)="validarCpf()" class="btn btn-danger btn-round">Avançar</button>
+                </div>
+                <a [routerLink]="['/painel-do-candidato']">Voltar</a>
+              </div>
+            </div>
+            <!-- FORMULARIO PARA REDEFINIR A SENHA -->
+            <div name="grupoSenha" *ngIf="pedirNovaSenha">
+              <p class="dfmn">Por favor digite uma senha, para acesso ao sistema</p>
+              <div class="text-box-cont">
+                <form [formGroup]="form">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-lock"></i>
+                      </span>
+                    </div>
+                    <input formControlName="password"
+                      [ngClass]="{'is-invalid': f.password.errors && f.password.touched}" type="password" minlength="8"
+                      class="form-control ipt_login" name="password" placeholder="SENHA" aria-label="password"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$" />
+                    <div class="invalid-feedback">
+                      A senha não atende aos requisitos mínimos
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-lock"></i>
+                      </span>
+                    </div>
+                    <input formControlName="confirmPassword" minlength="8"
+                      [ngClass]="{'is-invalid': f.confirmPassword.errors && f.confirmPassword.touched}" type="password"
+                      class="form-control ipt_login" name="confirmPassword" placeholder="CONFIRMAR SENHA"
+                      aria-label="confirmPassword" />
+                    <div class="invalid-feedback">
+                      Senhas diferentes
+                    </div>
+                  </div>
+                  <div class="input-group center">
+                    <button (click)="salvarSenha()" [disabled]="!form.valid"
+                      class="btn btn-danger btn-round">Enviar</button>
+                  </div>
+                </form>
+              </div>
+              <a [routerLink]="['/painel-do-candidato']">Voltar</a>
+              <div class="col-md-12 col-sm-12 mt-3 justify-content-start text-left">
+                <span style="font-size: 12px;">
+                  * A senha deve conter no mínimo 8 caracteres</span><br>
+                <span style="font-size: 12px;">
+                  * A senha deve conter no mínimo 1 letra maiúscula e uma minúscula</span><br>
+                <span style="font-size: 12px;">
+                  * A senha deve conter no mínimo 1 um número</span><br>
+                <span style="font-size: 12px;">
+                  * A senha deve conter no mínimo 1 um caracter especial</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 box-de image-100">
+            <div class="inn-cover">
+              <div class="ditk-inf">
+                <h2 class="w-100">Painel do Candidato </h2>
+              </div>
+              <div class="foter-credit">
+                Desenvolvido por : Canais Digitais
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fd7e14" type="ball-scale-pulse" [fullScreen]="true">
+  </ngx-spinner>
+</div>

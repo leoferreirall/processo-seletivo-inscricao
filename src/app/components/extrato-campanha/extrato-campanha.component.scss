@@ -1,0 +1,218 @@
+.ocultar{
+  display: none!important;
+}
+.fa-icon {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    // margin-top: 10px;
+    // margin-right: 10px;
+    cursor: pointer;
+}
+
+.fa-icon-plus {
+    position: absolute;
+    top: -0.3rem;
+    right: 0rem;
+    // margin-top: 10px;
+    // margin-right: 10px;
+    width: 24px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #fd7e14;
+    padding: 0.2rem;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+    background-clip: border-box;
+}
+
+.fa-icon-plus:hover {
+    box-shadow: 0 0 3px rgba(0, 0, 0, .125), 0 3px 5px rgba(0, 0, 0, .2);
+    background-color: #fd7d14c4;
+}
+
+// .list-group-item {
+//     padding-top: 0px;
+//     padding-bottom: 0px;
+// }
+.btn-warning.disabled,
+.btn-warning:disabled {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+    box-shadow: none;
+}
+
+// #modal-contrato {
+//     min-height: 100rem;
+// }
+// // .card-body {
+// //     min-height: 12rem;
+// // }
+// @media (min-width:1200) {
+//     .card-body {
+//         min-height: 12rem;
+//     }
+// }
+// @media (min-width: 992px) and (max-width: 1199px) {
+//     .card-body {
+//         min-height: 14rem;
+//     }
+// }
+// @media (min-width: 768px) and (max-width: 991px) {
+//     .card-body {
+//         min-height: 13rem;
+//     }
+//     h4 {
+//         font-size: 1.2rem;
+//     }
+// }
+// @media (max-width: 767px) {
+//     .card-body {
+//         min-height: 13rem;
+//         font-size: 0.7rem;
+//     }
+//     h4 {
+//         font-size: 1.1rem;
+//     }
+// }
+// @media (max-width: 415px) {}
+// .card-body {
+//     cursor: pointer;
+// }
+// .card-body:hover {
+//     box-shadow: 0 0 3px rgba(0, 0, 0, .125), 0 3px 5px rgba(0, 0, 0, .2);
+//     border-left: 1px solid #fd7e14;
+// }
+.aceite-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.btn-aceite {
+    font-size: 1.03rem;
+}
+
+.contrato-content {
+    max-height: 25rem;
+    overflow-x: scroll;
+    margin-bottom: 10px;
+}
+
+#pdf-contrato-content {
+    padding: 15px;
+    overflow: auto;
+    color: #000;
+}
+
+.info-parcela {
+    p {
+        margin-bottom: 0.3rem;
+    }
+}
+
+.alert-pagamento {
+    margin-top: 5px;
+    position: relative;
+    padding: .75rem;
+    //margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    font-size: 1rem;
+    p {
+        margin: 0px;
+    }
+}
+
+.callout-pagamento {
+    margin-top: 10px;
+    border-radius: .25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+    background-color: #fff;
+    border-left: 5px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.callout-orange {
+    border-left: 5px solid #fd7e14;
+}
+
+a:not([ref]).btn-edit {
+    color: #000;
+}
+
+a:not([ref]).btn-edit:hover {
+    color: #fff;
+}
+
+a:not([href]) {
+    color: #fff;
+}
+
+.card-outline-orange {
+    border-top: 3px solid #fd7e14;
+}
+
+.card-outline-success {
+    border-top: 3px solid #28a745;
+}
+
+.card-outline-warning {
+    border-top: 3px solid #ffae07;
+    background-color: #ffae072a !important;
+}
+
+.callout-insc-0 {
+    // AceiteIndisponivel
+    border-left: 5px solid #6c757d;
+    background-color: #6c757d2a !important;
+    //color: #fff !important;
+}
+
+.callout-insc-1 {
+    // AceiteDisponivel
+    border-left: 5px solid #dc3545;
+    background-color: #dc35452a !important;
+}
+
+.callout-insc-2 {
+    // PendentePagamento
+    border-left: 5px solid #ffc107;
+    background-color: #ffc1072a !important;
+    // color: #000 !important;
+}
+
+.callout-insc-3 {
+    // ProcessandoPagamento
+    border-left: 5px solid #17a2b8;
+    background-color: #17a2b82a !important;
+    // color: #fff !important;
+}
+
+.callout-insc-4 {
+    // PagamentoRecebido
+    border-left: 5px solid #007bff;
+    background-color: #007bff2a !important;
+    // color: #fff !important;
+}
+
+.callout-insc-5 {
+    // Matriculado
+    border-left: 5px solid #28a745;
+    background-color: #28a7452a !important;
+    //color: #fff !important;
+}
+
+.badge {
+    padding: .6em .4em !important;
+}

@@ -1,0 +1,5 @@
+export enum EventosEnum {
+  RETORNAR_PAINEL_CANDIDATO,
+  RETORNAR_INICIO,
+  ENVIAR_EMAIL
+}

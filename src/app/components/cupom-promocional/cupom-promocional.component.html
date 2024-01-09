@@ -1,0 +1,8 @@
+<div class="col-sm-12 col-md-12 col-lg-12 p-0 mb-4">
+    <div class="row mb-0">
+        <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+            <input id="cupom" [disabled]="disableCupom || cupomDadoAux" type="text" class="validate" [(ngModel)]="model.cupompromocional" [value]="cupomDado"/>
+            <label for="cupom" class="font-weight-normal" [ngClass]="model.cupompromocional || cupomDadoAux?'active':''">Cupom promocional</label>
+        </div>
+    </div>
+</div>

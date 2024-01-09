@@ -1,0 +1,34 @@
+button.btn {
+    height: auto;
+    line-height: 30px;
+}
+
+table.tabelaValores {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td.parcela {
+  width: 10%;
+  text-align: center;
+  border: 1px solid #dddddd;
+}
+
+td.valorIntegral {
+  width: 20%;
+  text-align: center;
+  border: 1px solid #dddddd;
+}
+
+td.valorDesconto {
+  width: 20%;
+  text-align: center;
+  border: 1px solid #dddddd;
+}
+
+td.campanha {
+  width: 50%;
+  text-align: left;
+  border: 1px solid #dddddd;
+}

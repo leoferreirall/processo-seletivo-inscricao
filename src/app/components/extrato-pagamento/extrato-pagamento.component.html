@@ -1,0 +1,47 @@
+<div class="col-sm-12 col-md-12 col-lg-12 ">
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <legend class="scheduler-border custom-legend-fam mb-0">Detalhes do pedido</legend>
+      <hr class="mt-0">
+    </div>
+
+    <div *ngIf="!InscricaoIfood() || !taxaInscricao" class="form-group col-md-12 mb-2">
+      <a (click)="downloadContratoAceito()" role="button"
+        class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-warning callout">
+        <span class="d-flex align-items-center">Impressão de contrato</span> </a>
+    </div>
+  </div>
+  <div *ngIf="extrato===null">
+    <p>Carregando opções de pagamento ...</p>
+  </div>
+  <div *ngIf="extrato!==null">
+    <ul class="list-group">
+      <li *ngIf="extrato.parcela!==0" class="list-group-item d-flex align-items-center" id="{{extrato.codLancamento}}">
+        <p>Parcela: {{extrato.parcela}}</p>
+      </li>
+      <li class="list-group-item" id="{{extrato.codLancamento}}">
+        <div class=" d-flex align-items-center">
+          <h4>{{extrato.valor | currency:'BRL'}}</h4>&nbsp;à vista{{ extrato.valor > valorMinParcela * 2 ? ' ou
+          parcelado.' : '.'}}
+        </div>
+        <!-- <hr>
+        <h7>Formas de Pagamento</h7>
+        <div class=" d-flex align-items-center justify-content-between ">
+            <label>
+                <input name="rd-forma-pagamento" type="radio" checked>&nbsp;&nbsp;<span
+                    class="btn-aceite"><i class="fas fa-credit-card"></i>&nbsp;&nbsp;Cartão
+                    de
+                    Crédito/Débito</span>
+            </label>
+        </div> -->
+      </li>
+    </ul>
+  </div>
+</div>
+<hr>
+<div class="col-sm-12 col-md-12 col-lg-12 " *ngIf="extrato.parcela!==0">
+  <div class="callout-pagamento callout-orange text-danger">
+    <p><small>* A matrícula somente será efetivada após a confirmação do pagamento, exceto nos casos em que tal
+        pagamento seja dispensado.</small></p>
+  </div>
+</div>

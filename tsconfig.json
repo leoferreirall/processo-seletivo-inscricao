@@ -1,0 +1,31 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "paths": {
+      "@services/*": ["./src/app/services/*"],
+      "@auth/*": ["./src/app/services/auth/*"],
+      "@token/*": ["./src/app/services/token/*"],
+      "@authentication/*": ["./src/app/components/authentication/*"],
+      "@shared/*": ["./src/app/components/shared/*"],
+      "@environments/*": ["./src/environments/*"],
+	    "@angular/*": [
+        "../node_modules/@angular/*"
+      ]
+    },
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}

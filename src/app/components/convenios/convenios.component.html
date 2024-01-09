@@ -1,0 +1,50 @@
+<ng-container *ngIf="loading && (convenios!=null && convenios.length <= 0)">
+    <div class="col-md-12 col-xs-12 col-sm-12 p-0">
+        <p>Carregando bolsas especiais para você...</p>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading && (convenios != null && convenios.length > 0)">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <legend class="scheduler-border custom-legend-fam mb-0">Bolsas e descontos</legend>
+            <hr class="mt-0">
+            <p class="mb-0"><small class="font-weight-light">A bolsa selecionada é válida para todo o período do
+                    curso.</small></p>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 p-0">
+        <ul class="list-group mb-3 b-shadow" style="margin-bottom: 0px !important; ">
+            <li class="list-group-item lh-condensed">
+                <div class="row m-0">
+                    <div class="col-md-6 d-flex" *ngFor="let item of convenios">
+                        <label class="f-size-termos">
+                            <input type="checkbox" [disabled]="item.disabled" name="convenio" id="{{item.valor}}"
+                                [checked]="item.selected" [(ngModel)]="item.selected" [value]="item"
+                                (change)="onChangeConvenio(item)" />
+                            <span class="d-flex justify-content-center">{{item.texto}} <i class="material-icons ml-2"
+                                    style="font-size: 17px; margin-top: 2px;" tooltip="{{item.descricao}}"
+                                    placement="top">help</i>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="form-row">
+        <label class="custom-label custom-label-information" style="border-radius: 5px; border: 1px solid #dddddd; line-height: none !important; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px;margin-top: 10px;margin-left: 5px;margin-right: 5px; text-align:justify;"
+            data-required="false" data-status="true">
+            <small>
+                *As condições para bolsas são válidas para o ingresso de candidatos nos cursos no Processo Seletivo
+                vigente e serão aplicadas nos valores integrais das mensalidades dos cursos, de acordo com a forma de
+                ingresso, modalidade (Presencial ou a Distância) ou bolsa selecionada no momento da inscrição. O
+                desconto não é cumulativo com outros benefícios e descontos e não se aplica ao curso de Medicina. Os
+                descontos referentes a bolsas oferecidas pela FAM serão aplicados de acordo com os regulamentos das
+                campanhas vigentes e serão cancelados definitivamente em caso de inadimplência do aluno. Promoção
+                sujeita a alteração sem aviso prévio. Consulte o Regulamento no site da Instituição.
+            </small>
+        </label>
+    </div>
+</ng-container>

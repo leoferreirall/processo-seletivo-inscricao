@@ -1,0 +1,178 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "psel-painel-candidato": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/psel-painel-candidato",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/assets/config/config.dev.json",
+                            "src/assets/config/config.prod.json"
+                        ],
+                        "styles": [
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
+                            "node_modules/admin-lte/dist/css/adminlte.min.css",
+                            "node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
+                            "node_modules/admin-lte/plugins/summernote/summernote-bs4.css",
+                            "node_modules/admin-lte/plugins/overlayScrollbars/css/overlayScrollbars.min.css",
+                            "node_modules/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css",
+                            "node_modules/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css",
+                            "node_modules/ngx-toastr/toastr.css",
+                            "node_modules/sweetalert2/src/sweetalert2.scss",
+                            "src/styles.scss"
+                        ],
+                        "scripts": [
+                            "node_modules/jquery/dist/jquery.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/assets/js/materialize.min.js",
+                            "src/assets/js/usability.js",
+                            "node_modules/admin-lte/plugins/jquery/jquery.min.js",
+                            "node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js",
+                            "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.min.js",
+                            "node_modules/admin-lte/dist/js/adminlte.min.js",
+                            "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
+                            "node_modules/admin-lte/plugins/moment/moment.min.js",
+                            "node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
+                            "node_modules/admin-lte/plugins/summernote/summernote-bs4.min.js",
+                            "node_modules/admin-lte/dist/js/demo.js",
+                            "node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
+                            "node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js",
+                            "node_modules/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js",
+                            "node_modules/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js",
+                            "node_modules/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js",
+                            "src/assets/js/App.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/assets/js/jquery.backstretch.min.js",
+                            "src/assets/js/retina-1.1.0.min.js",
+                            "src/assets/js/scripts.js",
+                            "src/assets/js/materialize.min.js",
+                            "src/assets/js/usability.js"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "5mb"
+                                }
+                            ]
+                        },
+                        "hmg": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.hmg.ts"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "psel-painel-candidato:build",
+                        "port": 4201
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "psel-painel-candidato:build:production"
+                        },
+                        "hmg": {
+                            "browserTarget": "psel-painel-candidato:build:hmg"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "psel-painel-candidato:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
+                        "styles": [
+                            "src/styles.scss"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "tsconfig.app.json",
+                            "tsconfig.spec.json",
+                            "e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "psel-painel-candidato:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "psel-painel-candidato:serve:production"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "psel-painel-candidato",
+    "cli": {
+        "analytics": false
+    }
+}

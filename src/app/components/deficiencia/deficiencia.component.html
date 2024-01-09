@@ -1,0 +1,96 @@
+<!-- <div class="col-sm-12 col-md-12 col-lg-12 ">
+    <div class="item row m-0 d-flex justify-content-center">
+        <div class="w-100">
+            <p><small>Você é portador de necessidades especiais?</small></p>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-md-12 col-lg-12 ">
+    <div class="item row m-0 d-flex justify-content-center mt-0">
+        <div class="col-md-12 col-xs-12 col-sm-12 p-0 mb-3">
+            <div class="row m-0">
+                <div class="col d-flex justify-content-end">
+                    <label class="f-size-termos">
+                        <input type="radio" name="possuideficiencia" [value]="true" id="sim"
+                            [(ngModel)]="possuiDeficiencia" required />
+                        <span class="d-flex justify-content-center"> Sim</span>
+                    </label>
+                </div>
+                <div class="col d-flex justify-content-start">
+                    <label class="f-size-termos">
+                        <input type="radio" name="possuideficiencia" [value]="false" id="nao"
+                            [(ngModel)]="possuiDeficiencia" required />
+                        <span class="d-flex justify-content-center"> Não</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="col-sm-12 col-md-12 col-lg-12 p-0">
+    <div class="item row m-0 d-flex justify-content-center mt-3">
+
+        <div class="col-md-12 col-xs-12 col-sm-12 p-0 mb-3" *ngIf="possuiDeficiencia">
+            <p><small>Selecione o(s) tipo(s) de necessidade(s) especial(is) que você possui.</small></p>
+            <ul class="list-group mb-3 b-shadow" style="margin-bottom: 0px !important; ">
+                <li class="list-group-item lh-condensed">
+
+                    <div class="row m-0">
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteAuditivo" [(ngModel)]="model.deficienteAuditivo"
+                                    id="deficienteAuditivo" />
+                                <span class="d-flex justify-content-center">Incapacidade auditiva</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteFala" [(ngModel)]="model.deficienteFala"
+                                    id="deficienteFala" />
+                                <span class="d-flex justify-content-center">Limitação na fala</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteFisico" [(ngModel)]="model.deficienteFisico"
+                                    id="deficienteFisico" />
+                                <span class="d-flex justify-content-center">Deficiência física</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteIntelectual"
+                                    [(ngModel)]="model.deficienteIntelectual" id="deficienteIntelectual" />
+                                <span class="d-flex justify-content-center">Deficiência intelectual</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteMental" [(ngModel)]="model.deficienteMental"
+                                    id="deficienteMental" />
+                                <span class="d-flex justify-content-center">Deficiência mental</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteMobReduzida"
+                                    [(ngModel)]="model.deficienteMobReduzida" id="deficienteMobReduzida" />
+                                <span class="d-flex justify-content-center">Mobilidade Reduzida</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <label class="f-size-termos">
+                                <input type="checkbox" [disabled]="disabled" name="deficienteVisual" [(ngModel)]="model.deficienteVisual"
+                                    id="deficienteVisual" />
+                                <span class="d-flex justify-content-center">Deficiência visual</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

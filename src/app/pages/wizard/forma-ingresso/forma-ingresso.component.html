@@ -1,0 +1,36 @@
+<ng-container *ngIf="carregando">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p>Carregando informações...</p>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="!carregando">
+    <ng-container [ngSwitch]="(currentStep | async)?.stage">
+        <ng-container *ngSwitchCase="stageEnum.Historico">
+            <app-historico [idrequisito]="detalheInscricao.codPsReqAnalise" [detalheInscricao]="detalheInscricao" [statusreq]="detalheInscricao.statusAnaliseHistorico" (complete)="onComplete()"></app-historico>
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.PortadorDiploma">
+            <app-transferencia [idrequisito]="detalheInscricao.codPsReqAnalise" [detalheInscricao]="detalheInscricao" [statusreq]="detalheInscricao.statusAnalise" (complete)="onComplete()"></app-transferencia>
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.Transferencia">
+            <app-transferencia [idrequisito]="detalheInscricao.codPsReqAnalise" [detalheInscricao]="detalheInscricao" [statusreq]="detalheInscricao.statusAnalise" (complete)="onComplete()"></app-transferencia>
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.Documentacao">
+            <app-transferencia [idrequisito]="detalheInscricao.codPsReqAnalise" [detalheInscricao]="detalheInscricao" [statusreq]="detalheInscricao.statusAnalise" (complete)="onComplete()"></app-transferencia>
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.Avaliacao">
+            <app-prova [statusreq]="detalheInscricao.statusAvaliacao" [detalheInscricao]="detalheInscricao" [curso]="detalheInscricao.curso" (complete)="onComplete()"></app-prova>
+        </ng-container>
+        <ng-container *ngSwitchCase="stageEnum.Enem">
+            <app-enem [statusreq]="detalheInscricao.statusEnem" [detalheInscricao]="detalheInscricao" [curso]="detalheInscricao.curso" (complete)="onComplete()"></app-enem>
+        </ng-container>
+    </ng-container>
+    <div class="d-inline w-100" *ngIf="permiteavancaretapa">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+            <button (click)="next()" class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"><span class="d-flex align-items-center">Continuar</span><span
+                class="d-flex align-items-center"><i
+                    class="material-icons prefix w-auto pl-2">arrow_forward</i></span></button>
+        </div>
+    </div>
+</ng-container>

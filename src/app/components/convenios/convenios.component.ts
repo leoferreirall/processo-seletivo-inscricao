@@ -1,0 +1,113 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { InscricaoService } from '@services/inscricao.service';
+import { Response } from 'src/app/models/response.model';
+
+@Component({
+  selector: 'app-convenios',
+  templateUrl: './convenios.component.html',
+  styleUrls: ['./convenios.component.scss']
+})
+export class ConveniosComponent implements OnInit {
+  @Input() uidl: number = null;
+  @Input() uidi: number = null;
+  @Input() codbolsa: string = null;
+  @Input() disabled: boolean;
+  @Output() onChange = new EventEmitter<string>();
+  convenios: any[] = [];
+  convenioSelecionado: any = null;
+  loading: boolean = true;
+
+  constructor(private service: InscricaoService) { }
+
+  ngOnInit(): void {
+    this.CarregarConvenios();
+  }
+
+  private CarregarConvenios(): any {
+    this.convenios = [];
+
+
+    if (this.uidl) {
+      // this.service.ConsultarConveniosPorInscricao(this.uidi)
+      //   .subscribe((response: Response) => {
+      //     if (response.statusCode === 200 && response.result !== null && response.result.length > 0) {
+      //       this.convenios.push(...response.result.map((item) => {
+      //         const option = {
+      //           id: item.nome,
+      //           texto: item.nome,
+      //           valor: item.codBolsa,
+      //           descricao: item.descricao,
+      //           selected: false,
+      //           disabled: false
+      //         };
+
+      //         if (this.convenioSelecionado && option.valor === this.convenioSelecionado)
+      //           option.selected = true;
+
+      //         return option;
+      //       }));
+      //     }
+
+      //     this.loading = false;
+      //   }, (err: HttpErrorResponse) => {
+
+      //   });
+    // } else {
+      this.service.ConsultarConveniosPorLead(this.uidl)
+        .subscribe((response: Response) => {
+          console.log(response)
+          if (response.statusCode === 200 && response.result !== null && response.result.length > 0) {
+            this.convenios.push(...response.result.map((item) => {
+              const option = {
+                id: item.nome,
+                texto: item.nome,
+                valor: item.codBolsa,
+                descricao: item.descricao,
+                selected: false,
+                disabled: item.convenioParceiro
+              };
+
+              if (this.convenioSelecionado && option.valor === this.convenioSelecionado)
+                option.selected = true;
+
+              return option;
+            }));
+          }
+          this.loading = false;
+        }, (err: HttpErrorResponse) => {
+
+        });
+    }
+  }
+
+  onChangeConvenio(e) {
+    if (e.selected) {
+      this.convenioSelecionado = e.valor;
+
+      for (var i = 0; i < this.convenios.length; i++) {
+        if (this.convenios[i].id == e.id) {
+          this.convenios[i].selected = true;
+        } else {
+          this.convenios[i].selected = false;
+        }
+      }
+    }
+    else
+      this.convenioSelecionado = null;
+    this.onChange.emit(this.convenioSelecionado);
+  }
+
+  setConvenio(e) {
+    if (e) {
+      this.convenioSelecionado = e;
+      for (var i = 0; i < this.convenios.length; i++) {
+        if (this.convenios[i].valor == e) {
+          this.convenios[i].selected = true;
+        } else {
+          this.convenios[i].selected = false;
+        }
+      }
+    }
+  }
+}

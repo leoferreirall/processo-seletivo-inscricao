@@ -1,0 +1,1384 @@
+<ng-container *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA'">
+  <ng-container *ngIf="detalheInscricao.requisito.codPsTipoRequisito == tipoRequisito.Documentacao
+                        && (statusreq == null
+                        || statusreq == status.Pendente)
+                        && detalheInscricao.requisito.ativo === 1">
+    <ng-container *ngTemplateOutlet="msgAnaliseDocumentacaoPendente"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="detalheInscricao.requisito.codPsTipoRequisito == tipoRequisito.Documentacao
+                        && (statusreq == status.AnaliseCoordenador
+                        || statusreq == status.AprovacaoCandidato
+                        || statusreq == status.ReanaliseCoordenador)">
+    <ng-container *ngTemplateOutlet="msgAnaliseDocumentacaoAguardandoAnalise"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="statusreq == status.AguardandoAceiteAnalise">
+    <ng-container *ngTemplateOutlet="msgAnaliseDocumentacaoAguardandoAceite"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="detalheInscricao.requisito.codPsTipoRequisito == tipoRequisito.Documentacao
+                && statusreq == status.DocumentacaoInvalida
+                && detalheInscricao.requisito.ativo === 1">
+    <ng-container *ngTemplateOutlet="msgAnaliseDocumentacaoInvalida"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="detalheInscricao.requisito.codPsTipoRequisito == tipoRequisito.DocumentacaoMatricula">
+    <ng-container *ngIf="detalheInscricao.statusChamada == 3">
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM.</h1>
+          <p>
+            Você se inscreveu no Processo Seletivo {{detalheInscricao.periodoLetivo}} mas, infelizmente, não foi
+            declassificado por insuficiência de nota.
+          </p>
+          <p>O Centro Universitário FAM agradece a sua participação!
+          <p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="detalheInscricao.statusChamada == 5">
+      <ng-container *ngIf="detalheInscricao.ofertaDisponivel">
+        <ng-container [ngSwitch]="statusreq">
+          <ng-container *ngSwitchCase="1">
+            <ng-container *ngTemplateOutlet="msgChamadaAguardandoAnalise"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="8">
+            <ng-container *ngTemplateOutlet="msgChamadaAguardandoAnalise"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="2">
+            <ng-container *ngTemplateOutlet="msgChamadaSemAnalise"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="3">
+            <ng-container *ngTemplateOutlet="msgChamadaAnaliseDocumentacaoInvalida"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="13">
+            <ng-container *ngTemplateOutlet="msgReprovado"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="12">
+            <ng-container *ngTemplateOutlet="msgAprovado"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <ng-container *ngTemplateOutlet="msgChamadaSemAnalise"></ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!detalheInscricao.ofertaDisponivel">
+        <ng-container *ngTemplateOutlet="msgAguardandoChamada"></ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="detalheInscricao.statusChamada == 9">
+      <ng-container *ngIf="detalheInscricao.ofertaDisponivel">
+        <ng-container *ngTemplateOutlet="msgAguardandoChamada"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="!detalheInscricao.ofertaDisponivel">
+        <div class="row">
+          <div class="col-md-12 text-left">
+            <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM.</h1>
+            <p>
+              Você se inscreveu no Processo Seletivo {{detalheInscricao.periodoLetivo}} mas, infelizmente, não compareceu
+              a chamada.
+            </p>
+            <p>O Centro Universitário FAM agradece a sua participação!
+            <p>
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+    <ng-container *ngIf="detalheInscricao.statusChamada == 10">
+      <ng-container *ngTemplateOutlet="msgAguardandoChamada"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="detalheInscricao.statusChamada != 3
+    && detalheInscricao.statusChamada != 5
+    && detalheInscricao.statusChamada != 9
+    && detalheInscricao.statusChamada != 10">
+      <ng-container *ngTemplateOutlet="msgAguardandoChamada"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="detalheInscricao.processoSeletivo != 'MEDICINA'">
+  <ng-container *ngIf="statusreq !== null && statusreq !== 0 && statusreq !== status.DocumentacaoPendenteEntrega && statusreq !== status.DocumentacaoInvalida">
+    <ng-container *ngIf="statusreq === status.Reprovado">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p>
+            No momento, você foi reprovado. Para saber mais, envie um e-mail para
+            <strong>analise.curricular@vemprafam.com.br</strong>.
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.Aprovado && detalheInscricao.possuiAprovacao">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h4 style='color: #ff5900;'>Parabéns!</h4>
+          <p>Você está a um passo de começar seus estudos na FAM!</p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.Aprovado && !detalheInscricao.possuiAprovacao && !(detalheInscricao.processoSeletivo == 'MEDICINA' && statusreq === status.Aprovado && detalheInscricao.statusChamada != 5)">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h4 style='color: #ff5900;'>Parabéns!</h4>
+          <p>
+            Você está a um passo de começar seus estudos na FAM, mas ainda existem outros requisitos para
+            serem cumpridos
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.Aprovado && detalheInscricao.statusChamada == 5 && !detalheInscricao.possuiAprovacao">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h4 style='color: #ff5900;'>Parabéns!</h4>
+          <p>
+            Você está a um passo de começar seus estudos na FAM, mas ainda existem outros requisitos para
+            serem cumpridos
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.AnaliseCoordenador || statusreq === status.AprovacaoCandidato || (detalheInscricao.processoSeletivo == 'MEDICINA' && statusreq === status.Aprovado && detalheInscricao.statusChamada != 5)">
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <p>Sua solicitação foi efetuada com sucesso!</p>
+          <p>
+            A sua documentação está em processo de análise. O prazo para a publicação do resultado é de 15
+            dias úteis. Acompanhe a situação de sua análise pelo Portal do Candidato.
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.IndeferidoSemOferta || statusreq === status.IndeferidoOutros">
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <p>
+            No momento, sua análise foi indeferida. Para saber mais, envie um e-mail para
+            <strong>analise.curricular@vemprafam.com.br</strong>.
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.ReanaliseCoordenador">
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <p>Seu retorno foi efetuado com sucesso!</p>
+          <p>
+            Sua documentação agora está em processo de Reanálise do Coordenador. Acompanhe a situação de sua
+            análise pelo Portal do Candidato.
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="statusreq === status.AguardandoAceiteAnalise">
+      <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+        <div class="row mb-4">
+          <p>Parabéns, sua Análise Curricular foi aprovada!</p>
+          <p>
+            Clique agora no botão visualizar análise curricular, após o aceite da análise é só solicitar a
+            matrícula e prosseguir com as alterações.
+          </p>
+        </div>
+        <div class="row mb-4">
+          <input type="button"
+                class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                value="CLIQUE AQUI PARA VISUALIZAR SUA ANÁLISE CURRICULAR" (click)="onClickDownloadArquivo()">
+        </div>
+        <div class="row mb-0">
+          <label class="f-size-termos">
+            <input type="checkbox" name="analise" [(ngModel)]="model.aceiteanalise"
+                  (change)="onChangeOpcao(true)" />
+            <span>Li e concordo com a análise curricular.</span>
+          </label>
+        </div>
+        <div class="row mb-0">
+          <label class="f-size-termos">
+            <input type="checkbox" name="reanalise" [(ngModel)]="model.reanalise"
+                  (change)="onChangeOpcao(false)" />
+            <span>Li e NÃO concordo com a análise curricular.</span>
+          </label>
+        </div>
+        <div class="row mb-4">
+          <p>
+            Após o aceite da análise, o candidato está ciente e de acordo que somente poderá solicitar uma
+            reanálise para o semestre seguinte ao do ingresso.
+          </p>
+        </div>
+      </div>
+      <ng-container *ngIf="this.model.aceiteanalise">
+        <div *ngIf="!acesso" class="col-sm-12 col-md-12 col-lg-12 mb-4">
+          <div class="row mb-4">
+            <input type="button"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  value="SOLICITAR MATRÍCULA" (click)="onClickAceiteAnalise()">
+          </div>
+        </div>
+        <div class="row" *ngIf="acesso">
+          <div role="alert" class="alert alert-warning col-md-12 text-center">
+            <strong>A solicitação da matrícula deverá ser realizada pelo candidato.</strong>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="this.model.reanalise">
+        <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+          <div *ngIf="!acesso" class="row mb-4">
+            <input type="button"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  value="SOLICITAR REANÁLISE" (click)="onClickReanalise()">
+          </div>
+          <div class="row" *ngIf="acesso">
+            <div role="alert" class="alert alert-warning col-md-12 text-center">
+              <strong>A solicitação da reanálise deverá ser realizada pelo cadidato.</strong>
+            </div>
+          </div>
+          <ng-container *ngIf="solicitarreanalise">
+            <form #form="ngForm" (ngSubmit)="form.valid && onSubmitReanalise()" novalidate>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <app-drop-down-list name="motivo" #motivo
+                                      [title]="'Por qual motivo deseja solicitar uma reanálise?'"
+                                      [itens]="motivosreanalise" [show]="true" [defaultvalue]="'Selecione uma opção'"
+                                      (selectChange)="onChangeMotivo($event)" [required]="true">
+                  </app-drop-down-list>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="justificarmotivo">
+                <div class="form-group col-md-12">
+                  <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                    <textarea id="justificativa" class="materialize-textarea" maxlength="1000"
+                              rows="20" required [(ngModel)]="model.justificativa"
+                              name="justificativa"></textarea>
+                    <label for="justificativa" class="font-weight-normal">Descreva o motivo</label>
+                  </div>
+                  <div class="p-0 w-100 d-flex justify-content-left mt-2 mb-0">
+                    <label><strong>1000</strong> caracteres restantes</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12 d-flex justify-content-center">
+                  <input type="submit" [disabled]="form.invalid"
+                        class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                        value="SALVAR">
+                </div>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="statusreq === null || statusreq === 0 || statusreq === status.DocumentacaoInvalida">
+    <form #form="ngForm" novalidate>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h4 *ngIf="detalheInscricao.stage != stage.Documentacao && detalheInscricao.stage != stage.Historico">
+            ANÁLISE CURRICULAR
+          </h4>
+          <h4 *ngIf="detalheInscricao.stage == stage.Documentacao">DOCUMENTAÇÃO</h4>
+          <h4 *ngIf="detalheInscricao.stage == stage.Historico">HISTÓRICO</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <div *ngIf="statusreq !== status.DocumentacaoInvalida">
+            <p>
+              Fique atento(a)! Para prosseguir com sua solicitação de Análise Curricular, você deve enviar
+              seus documentos contendo as informações abaixo:
+            </p>
+          </div>
+          <div *ngIf="statusreq === status.DocumentacaoInvalida">
+            <p>Ops!</p>
+            <p>
+              A documentação enviada não atende aos requisitos necessários para que prossigamos com a sua
+              solicitação de Análise Curricular. Revise os documentos enviados e confira se eles possuem
+              as seguintes informações:
+            </p>
+          </div>
+          <ul class="text-danger" *ngIf="detalheInscricao.processoSeletivo != 'MEDICINA'">
+            <li><strong>*</strong> Nome da Instituição de Origem;</li>
+            <li><strong>*</strong> Nome das Disciplinas;</li>
+            <li><strong>*</strong> Carga Horária;</li>
+            <li><strong>*</strong> Notas;</li>
+            <li><strong>*</strong> Situação na Disciplina: Aprovado/Reprovado.</li>
+          </ul>
+          <ul class="text-danger"
+              *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.PortadorDiploma">
+            <li><strong>*</strong> RG ou RNE;</li>
+            <li><strong>*</strong> CPF;</li>
+            <li><strong>*</strong> Histórico do Ensino Médio ou equivalente (Declaração de conclusão);</li>
+            <li><strong>*</strong> Certificado de Conclusão do Ensino Médio ou equivalente;</li>
+            <li><strong>*</strong> Comprovante de Residência do candidato ou de seu responsável;</li>
+            <li>
+              <strong>*</strong> Histórico Escolar do Curso da área da Saúde conforme Resolução CNS n.º
+              287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República
+              Federativa do Brasil;
+            </li>
+            <li>
+              <strong>*</strong> Diploma de Graduação ou certificado de conclusão de curso ou certificado
+              de colação de grau do curso da área da saúde.
+            </li>
+          </ul>
+          <ul class="text-danger"
+              *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia">
+            <li><strong>*</strong> RG ou RNE;</li>
+            <li><strong>*</strong> CPF;</li>
+            <li>
+              <strong>*</strong> Histórico Escolar de Graduação em Medicina (IES de origem), autorizado ou
+              reconhecido pelo Ministério da Educação (MEC), da República Federativa do Brasil;
+            </li>
+            <li><strong>*</strong> Histórico do Ensino Médio ou equivalente (Declaração de conclusão);</li>
+            <li><strong>*</strong> Certificado de Conclusão do Ensino Médio ou equivalente;</li>
+            <li><strong>*</strong> Comprovante de Residência do candidato ou de seu responsável.</li>
+          </ul>
+          <ul class="text-danger"
+              *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Enem">
+            <li><strong>*</strong> RG ou RNE;</li>
+            <li><strong>*</strong> CPF;</li>
+            <li><strong>*</strong> Histórico do Ensino Médio ou equivalente;</li>
+            <li><strong>*</strong> Certificado de Conclusão do Ensino Médio ou equivalente;</li>
+            <li><strong>*</strong> Comprovante de Residência do candidato ou de seu responsável.</li>
+          </ul>
+          <ul class="text-danger"
+              *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Historico">
+            <li>
+              <strong>*</strong> Histórico Escolar do Curso da área da Saúde conforme Resolução CNS n.º
+              287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República
+              Federativa do Brasil;
+            </li>
+            <li>
+              <strong>*</strong> Diploma de Graduação ou certificado de conclusão de curso ou certificado
+              de colação de grau do curso da área da saúde.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row"
+          [hidden]="!(detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia)">
+        <div class="form-group col-md-12">
+          <app-drop-down-list name="qtdSemestres" [name]="qtdSemestres" #qtdSemestres
+                              [title]="'Semestres cursados'" [itens]="listaQtdSemestres" [show]="true"
+                              [defaultvalue]="'Selecione uma opção'" [required]="true">
+          </app-drop-down-list>
+        </div>
+      </div>
+      <div *ngIf="!acesso" class="row">
+        <div class="d-inline w-100">
+          <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+            <input type="file" multiple #fileUpload style="display: none;" accept="image/*,.pdf">
+            <button type="button"
+                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                    (click)="onClick()">
+              <span class="d-flex align-items-center">Selecionar arquivos</span><span class="d-flex align-items-center">
+                <i class="material-icons prefix w-auto pl-2">file_upload</i>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-12 d-flex flex-column align-items-start justify-content-center mt-4">
+          <ul *ngFor="let file of files;index as i;">
+            <li>
+              <div class="row">
+                <div class="col-sm-2">
+                  <i class="icon-delete-button material-icons" (click)="onDeleteClick(i)">delete</i>
+                </div>
+                <div class="col-sm-10">
+                  <p class="justify-content-center">{{file.data.name}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-danger">
+          Clique no botão acima e faça agora o upload de seu histórico acadêmico e diploma
+          de graduação para análise de currículo acadêmico.
+        </p>
+
+        <div class="d-inline w-100">
+          <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+            <button type="button"
+                    [disabled]="files.length == 0 || (detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia && !qtdSemestres.valorselecionado)"
+                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                    (click)="uploadFiles()">
+              <span class="d-flex align-items-center">
+                Confirmar e enviar
+                documentos
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="acesso">
+        <div role="alert" class="alert alert-warning col-md-12 text-center">
+          <strong>O envio dos documentos deverá ser realizado pelo cadidato.</strong>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</ng-container>
+<ng-template #msgRequisitoNaoAtivo>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM!</h1>
+      <p>
+        Você se inscreveu no Processo Seletivo {{detalheInscricao.periodoLetivo}} mas, infelizmente, o período para envio de documentação já foi encerrado.
+      </p>
+      <p>O Centro Universitário FAM agradece a sua participação!
+      <p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #msgAguardandoChamada>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM! Processo Seletivo - {{detalheInscricao.periodoLetivo}} - para o curso de MEDICINA.</h1>
+      <p>
+        Para efetivação da matrícula, o candidato deverá enviar os documentos descritos neste EDITAL, digitalizados e em formato .pdf, por meio de upload no Painel do Candidato, no requerimento específico "Entrega de Documentos", conforme regula o
+        <a href="https://vemprafam.com.br/editais/" target="_blank">edital</a>.
+      </p>
+      <p>
+        Caso seja convocado, você será comunicado por telefone e/ou e-mail. Fique atento no período de matrícula.
+      </p>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && (detalheInscricao.idFormaIngresso == formaIngresso.Enem || detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma)">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <!-- <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps != 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul> -->
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso != formaIngresso.Enem && detalheInscricao.idFormaIngresso != formaIngresso.PortadorDiploma">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <p>
+            <b>Horário de atendimento</b><br>
+            <b>Segunda a sexta-feira:</b> Das 11h às 21h<br>
+            <b>Sábados:</b> Das 08h às 12h
+          </p>
+        </li>
+      </ul>
+
+      <p><b>Confira a lista dos documentos necessários:</b></p>
+      <ul>
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem">
+          <p>Boletim do ENEM.</p>
+        </li>
+
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma">
+          <p>Histórico Escolar do Curso da área da Saúde, conforme Resolução CNS n.º 287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República Federativa do Brasil.</p>
+        </li>
+
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma">
+          <p>Diploma de Graduação ou certificado de conclusão de curso ou certificado de colação de grau do curso da área da saúde descrito no item 1.2 do presente Edital. </p>
+        </li>
+
+        <li>
+          <p>Cédula de Identidade – RG ou RNE. No caso de RNE provisório, este deve estar vigente, caso contrário, deverá ter protocolo do pedido de asilo (refugiado) ou renovação da documento.</p>
+        </li>
+        <li>
+          <p>Cadastro da Pessoa Física (CPF) do candidato ou responsável legal, caso não conste no RG.</p>
+        </li>
+        <li>
+          <p>Certidão de nascimento ou casamento.</p>
+        </li>
+        <li>
+          <p>Certificado de conclusão do ensino médio ou equivalente.</p>
+        </li>
+        <li>
+          <p>Histórico escolar do ensino médio ou equivalente.</p>
+        </li>
+        <li>
+          <p>Comprovante de residência do candidato ou de seu responsável.</p>
+        </li>
+        <li>
+          <p>1 (uma) foto 3x4 recente.</p>
+        </li>
+      </ul>
+      <p><br><b>Boa sorte!</b></p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #msgChamadaSemAnalise>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM! Processo Seletivo - {{detalheInscricao.periodoLetivo}} - para o curso de MEDICINA.</h1>
+      <p>
+        Para efetivação da matrícula, o candidato deverá enviar os documentos descritos neste EDITAL,
+        digitalizados e em formato .pdf, por meio de upload no Painel do Candidato, no requerimento específico
+        de "Entrega de Documentos", conforme regula
+        o
+        <a href="https://vemprafam.com.br/editais/" target="_blank">edital</a>.
+      </p>
+      <p>
+        Caso seja convocado, você será comunicado por telefone e/ou e-mail. Fique atento no período de matrícula.
+      </p>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps == 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps != 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso != formaIngresso.Enem">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <p>
+            <b>Horário de atendimento</b><br>
+            <label><b>Segunda a sexta-feira:</b> Das 11h às 21h</label><br>
+            <label><b>Sábados:</b> Das 09h às 12h</label>
+          </p>
+        </li>
+      </ul>
+
+      <p><b>Confira a lista dos documentos necessários:</b></p>
+      <ul>
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem">
+          <p>Boletim do ENEM.</p>
+        </li>
+
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma">
+          <p>Histórico Escolar do Curso da área da Saúde, conforme Resolução CNS n.º 287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República Federativa do Brasil.</p>
+        </li>
+
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma">
+          <p>Diploma de Graduação ou certificado de conclusão de curso ou certificado de colação de grau do curso da área da saúde descrito no item 1.2 do presente Edital.</p>
+        </li>
+
+        <li>
+          <p>Cédula de Identidade – RG ou RNE. No caso de RNE provisório, este deve estar vigente, caso contrário, deverá ter protocolo do pedido de asilo (refugiado) ou renovação da documento.</p>
+        </li>
+        <li>
+          <p>Cadastro da Pessoa Física (CPF) do candidato ou responsável legal, caso não conste no RG.</p>
+        </li>
+        <li>
+          <p>Certidão de nascimento ou casamento.</p>
+        </li>
+        <li>
+          <p>Certificado de conclusão do ensino médio ou equivalente.</p>
+        </li>
+        <li>
+          <p>Histórico escolar do ensino médio ou equivalente.</p>
+        </li>
+        <li>
+          <p>Comprovante de residência do candidato ou de seu responsável.</p>
+        </li>
+        <li>
+          <p>1 (uma) foto 3x4 recente.</p>
+        </li>
+      </ul>
+      <p><br><b>Boa sorte!</b></p>
+    </div>
+  </div>
+  <form #form="ngForm" novalidate>
+    <div *ngIf="!acesso" class="row">
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <input type="file" multiple #fileUpload style="display: none;" accept="image/*,.pdf">
+          <button type="button"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="onClick()">
+            <span class="d-flex align-items-center">
+              Selecionar
+              arquivos
+            </span><span class="d-flex align-items-center">
+              <i class="material-icons prefix w-auto pl-2">file_upload</i>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-12 d-flex flex-column align-items-start justify-content-center mt-4">
+        <ul *ngFor="let file of files;index as i;">
+          <li>
+            <div class="row">
+              <div class="col-sm-2">
+                <i class="icon-delete-button material-icons" (click)="onDeleteClick(i)">delete</i>
+              </div>
+              <div class="col-sm-10">
+                <p class="justify-content-center">{{file.data.name}}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <p class="text-danger">Clique no botão acima e faça agora o upload de seu histórico acadêmico e diploma de graduação para análise de currículo acadêmico.</p> -->
+
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <button type="button"
+                  [disabled]="files.length == 0 || (detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia && !qtdSemestres.valorselecionado)"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="uploadFiles()">
+            <span class="d-flex align-items-center">
+              Confirmar e enviar
+              documentos
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center">
+        <strong>O envio dos documentos deverá ser realizado pelo cadidato.</strong>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #msgChamadaAguardandoAnalise>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold"><b>Seja bem-vindo(a) à FAM! Processo Seletivo - {{detalheInscricao.periodoLetivo}} - para o curso de MEDICINA.</b></h1>
+      <p>
+        Estamos analisando as informações enviadas, conforme regula o <a href="https://vemprafam.com.br/editais/"
+                                                                        target="_blank">edital</a>.
+      </p>
+      <p>
+        Caso seja convocado, você será comunicado por telefone e/ou e-mail. Fique atento no período de matrícula.
+      </p>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps == 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps != 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso != formaIngresso.Enem">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <p>
+            <b>Horário de atendimento</b><br>
+            <label><b>Segunda a sexta-feira:</b> Das 11h às 21h</label><br>
+            <label><b>Sábados:</b> Das 09h às 12h</label>
+          </p>
+        </li>
+      </ul>
+
+      <p><b>Boa sorte!</b></p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #msgChamadaAnaliseDocumentacaoInvalida>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM! Processo Seletivo - {{detalheInscricao.periodoLetivo}} - para o curso de MEDICINA.</h1>
+      <p><b>Documentação inválida!</b></p>
+      <p>
+        Para efetivação da matrícula, o candidato deverá enviar os documentos descritos neste EDITAL,
+        digitalizados e em formato .pdf, por meio do upload no Painel do Candidato, no requerimento específico
+        "Entrega de Documentos", conforme regula o
+        <a href="https://vemprafam.com.br/editais/" target="_blank">edital</a>.
+      </p>
+      <p>
+        Caso seja convocado, você será comunicado por telefone e/ou e-mail. Fique atento no período de matrícula.
+      </p>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps == 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps != 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso != formaIngresso.Enem">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <p>
+            <b>Horário de atendimento</b><br>
+            <label><b>Segunda a sexta-feira:</b> Das 11h às 21h</label><br>
+            <label><b>Sábados:</b> Das 09h às 12h</label>
+          </p>
+        </li>
+      </ul>
+
+      <p><b>Confira a lista dos documentos necessários:</b></p>
+      <ul>
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem">
+          <p>Boletim do ENEM.</p>
+        </li>
+
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma">
+          <p>Histórico Escolar do Curso da área da Saúde, conforme Resolução CNS n.º 287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República Federativa do Brasil. </p>
+        </li>
+
+        <li *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.PortadorDiploma">
+          <p>Diploma de Graduação ou certificado de conclusão de curso ou certificado de colação de grau do curso da área da saúde descrito no item 1.2 do presente Edital. </p>
+        </li>
+
+        <li>
+          <p>Cédula de Identidade – RG ou RNE. No caso de RNE provisório, este deve estar vigente, caso contrário, deverá ter protocolo do pedido de asilo (refugiado) ou renovação da documento. </p>
+        </li>
+        <li>
+          <p>Cadastro da Pessoa Física (CPF) do candidato ou responsável legal, caso não conste no RG.</p>
+        </li>
+        <li>
+          <p>Certidão de nascimento ou casamento.</p>
+        </li>
+        <li>
+          <p>Certificado de conclusão do ensino médio ou equivalente.</p>
+        </li>
+        <li>
+          <p>Histórico escolar do ensino médio ou equivalente.</p>
+        </li>
+        <li>
+          <p>Comprovante de residência do candidato ou de seu responsável.</p>
+        </li>
+        <li>
+          <p>1 (uma) foto 3x4 recente.</p>
+        </li>
+      </ul>
+      <p><b>Boa sorte!</b></p>
+    </div>
+  </div>
+  <form #form="ngForm" novalidate>
+    <div *ngIf="!acesso" class="row">
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <input type="file" multiple #fileUpload style="display: none;" accept="image/*,.pdf">
+          <button type="button"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="onClick()">
+            <span class="d-flex align-items-center">
+              Selecionar
+              arquivos
+            </span><span class="d-flex align-items-center">
+              <i class="material-icons prefix w-auto pl-2">file_upload</i>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-12 d-flex flex-column align-items-start justify-content-center mt-4">
+        <ul *ngFor="let file of files;index as i;">
+          <li>
+            <div class="row">
+              <div class="col-sm-2">
+                <i class="icon-delete-button material-icons" (click)="onDeleteClick(i)">delete</i>
+              </div>
+              <div class="col-sm-10">
+                <p class="justify-content-center">{{file.data.name}}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--
+      <p class="text-danger">Clique no botão acima e faça agora o upload de seu histórico acadêmico e diploma de graduação para análise de currículo acadêmico.</p> -->
+
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <button type="button"
+                  [disabled]="files.length == 0 || (detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia && !qtdSemestres.valorselecionado)"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="uploadFiles()">
+            <span class="d-flex align-items-center">
+              Confirmar e enviar
+              documentos
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center">
+        <strong>O envio dos documentos deverá ser realizado pelo cadidato.</strong>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #msgAnaliseDocumentacaoPendente>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM! Processo Seletivo - {{detalheInscricao.periodoLetivo}} - para o curso de MEDICINA.</h1>
+      <p>
+        Para efetivação da matrícula, o candidato deverá enviar os documentos descritos neste EDITAL,
+        digitalizados e em formato .pdf, por meio do upload no Painel do Candidato, no requerimento específico
+        "Entrega de Documentos", conforme regula o
+        <a href="https://vemprafam.com.br/editais/" target="_blank">edital</a>.
+      </p>
+      <p><b>Confira a lista dos documentos necessários:</b></p>
+      <ul *ngIf="detalheInscricao.stage == stage.PortadorDiploma">
+        <li>
+          <p>RG ou RNE;</p>
+        </li>
+        <li>
+          <p>CPF;</p>
+        </li>
+        <li>
+          <p>Histórico do Ensino Médio ou equivalente (Declaração de conclusão);</p>
+        </li>
+        <li>
+          <p>Certificado de Conclusão do Ensino Médio ou equivalente;</p>
+        </li>
+        <li>
+          <p>Comprovante de Residência do candidato ou de seu responsável;</p>
+        </li>
+        <li>
+          <p>
+            Histórico Escolar do Curso da área da Saúde conforme Resolução CNS n.º
+            287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República
+            Federativa do Brasil;
+          </p>
+        </li>
+        <li>
+          <p>
+            Diploma de Graduação ou certificado de conclusão de curso ou certificado
+            de colação de grau do curso da área da saúde.
+          </p>
+        </li>
+      </ul>
+      <ul *ngIf="detalheInscricao.stage == stage.Transferencia">
+        <li>
+          <p>RG ou RNE;</p>
+        </li>
+        <li>
+          <p>CPF;</p>
+        </li>
+        <li>
+          <p>
+            Histórico Escolar de Graduação em Medicina (IES de origem), autorizado ou
+            reconhecido pelo Ministério da Educação (MEC), da República Federativa do Brasil;
+          </p>
+        </li>
+        <li>
+          <p>Histórico do Ensino Médio ou equivalente (Declaração de conclusão);</p>
+        </li>
+        <li>
+          <p>Certificado de Conclusão do Ensino Médio ou equivalente;</p>
+        </li>
+        <li>
+          <p>Comprovante de Residência do candidato ou de seu responsável.</p>
+        </li>
+      </ul>
+      <p><b>Boa sorte!</b></p>
+    </div>
+  </div>
+  <form #form="ngForm" novalidate>
+    <div class="row" [hidden]="detalheInscricao.stage != stage.Transferencia">
+      <div class="form-group col-md-12">
+        <app-drop-down-list name="qtdSemestres" [name]="qtdSemestres" #qtdSemestres
+                            [title]="'Semestres cursados'" [itens]="listaQtdSemestres" [show]="true"
+                            [defaultvalue]="'Selecione uma opção'" [required]="true">
+        </app-drop-down-list>
+      </div>
+    </div>
+    <div *ngIf="!acesso" class="row">
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <input type="file" multiple #fileUpload style="display: none;" accept="image/*,.pdf">
+          <button type="button"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="onClick()">
+            <span class="d-flex align-items-center">
+              Selecionar
+              arquivos
+            </span><span class="d-flex align-items-center">
+              <i class="material-icons prefix w-auto pl-2">file_upload</i>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-12 d-flex flex-column align-items-start justify-content-center mt-4">
+        <ul *ngFor="let file of files;index as i;">
+          <li>
+            <div class="row">
+              <div class="col-sm-2">
+                <i class="icon-delete-button material-icons" (click)="onDeleteClick(i)">delete</i>
+              </div>
+              <div class="col-sm-10">
+                <p class="justify-content-center">{{file.data.name}}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <button type="button"
+                  [disabled]="files.length == 0 || (detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia && !qtdSemestres.valorselecionado)"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="uploadFiles()">
+            <span class="d-flex align-items-center">
+              Confirmar e enviar
+              documentos
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center">
+        <strong>O envio dos documentos deverá ser realizado pelo cadidato.</strong>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #msgAnaliseDocumentacaoInvalida>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">
+        Seja bem-vindo(a) à FAM! Processo Seletivo - {{detalheInscricao.periodoLetivo}} - para o
+        curso de MEDICINA.
+      </h1>
+      <p><b>Documentação inválida!</b></p>
+      <p>
+        Para efetivação da matrícula, o candidato deverá enviar os documentos descritos neste EDITAL,
+        digitalizados e em formato .pdf, por meio do upload no Painel do Candidato, no requerimento específico
+        "Entrega de Documentos", conforme regula o
+        <a href="https://vemprafam.com.br/editais/" target="_blank">edital</a>.
+      </p>
+      <p><b>Confira a lista dos documentos necessários:</b></p>
+      <ul *ngIf="detalheInscricao.stage == stage.PortadorDiploma">
+        <li>
+          <p>RG ou RNE;</p>
+        </li>
+        <li>
+          <p>CPF;</p>
+        </li>
+        <li>
+          <p>Histórico do Ensino Médio ou equivalente (Declaração de conclusão);</p>
+        </li>
+        <li>
+          <p>Certificado de Conclusão do Ensino Médio ou equivalente;</p>
+        </li>
+        <li>
+          <p>Comprovante de Residência do candidato ou de seu responsável;</p>
+        </li>
+        <li>
+          <p>
+            Histórico Escolar do Curso da área da Saúde conforme Resolução CNS n.º
+            287 de 08/10/1998, autorizado ou reconhecido pelo Ministério da Educação (MEC), da República
+            Federativa do Brasil;
+          </p>
+        </li>
+        <li>
+          <p>
+            Diploma de Graduação ou certificado de conclusão de curso ou certificado
+            de colação de grau do curso da área da saúde.
+          </p>
+        </li>
+      </ul>
+      <ul *ngIf="detalheInscricao.stage == stage.Transferencia">
+        <li>
+          <p>RG ou RNE;</p>
+        </li>
+        <li>
+          <p>CPF;</p>
+        </li>
+        <li>
+          <p>
+            Histórico Escolar de Graduação em Medicina (IES de origem), autorizado ou
+            reconhecido pelo Ministério da Educação (MEC), da República Federativa do Brasil;
+          </p>
+        </li>
+        <li>
+          <p>Histórico do Ensino Médio ou equivalente (Declaração de conclusão);</p>
+        </li>
+        <li>
+          <p>Certificado de Conclusão do Ensino Médio ou equivalente;</p>
+        </li>
+        <li>
+          <p>Comprovante de Residência do candidato ou de seu responsável.</p>
+        </li>
+      </ul>
+      <p><b>Boa sorte!</b></p>
+    </div>
+  </div>
+  <form #form="ngForm" novalidate>
+    <div class="row" [hidden]="detalheInscricao.stage != stage.Transferencia">
+      <div class="form-group col-md-12">
+        <app-drop-down-list name="qtdSemestres" [name]="qtdSemestres" #qtdSemestres
+                            [title]="'Semestres cursados'" [itens]="listaQtdSemestres" [show]="true"
+                            [defaultvalue]="'Selecione uma opção'" [required]="true">
+        </app-drop-down-list>
+      </div>
+    </div>
+    <div *ngIf="!acesso" class="row">
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <input type="file" multiple #fileUpload style="display: none;" accept="image/*,.pdf">
+          <button type="button"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="onClick()">
+            <span class="d-flex align-items-center">
+              Selecionar
+              arquivos
+            </span><span class="d-flex align-items-center">
+              <i class="material-icons prefix w-auto pl-2">file_upload</i>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-12 d-flex flex-column align-items-start justify-content-center mt-4">
+        <ul *ngFor="let file of files;index as i;">
+          <li>
+            <div class="row">
+              <div class="col-sm-2">
+                <i class="icon-delete-button material-icons" (click)="onDeleteClick(i)">delete</i>
+              </div>
+              <div class="col-sm-10">
+                <p class="justify-content-center">{{file.data.name}}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-inline w-100">
+        <div class="f1-buttons col-sm-12 col-md-12 col-lg-12 p-0 d-flex justify-content-end">
+          <button type="button"
+                  [disabled]="files.length == 0 || (detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.stage == stage.Transferencia && !qtdSemestres.valorselecionado)"
+                  class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                  (click)="uploadFiles()">
+            <span class="d-flex align-items-center">
+              Confirmar e enviar
+              documentos
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center">
+        <strong>O envio dos documentos deverá ser realizado pelo cadidato.</strong>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #msgAnaliseDocumentacaoAguardandoAnalise>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <div class="row mb-4">
+        <h1 class="h5 font-weight-bold">Sua solicitação foi efetuada com sucesso!</h1>
+        <p>
+          A sua documentação está em processo de análise. O prazo para a publicação do resultado é de 15
+          dias úteis. Acompanhe a situação de sua análise pelo Portal do Candidato.
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #msgAnaliseDocumentacaoAguardandoAceite>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <div class="row mb-4">
+        <h1 class="h5 font-weight-bold">Parabéns, sua Análise Curricular foi aprovada!</h1>
+        <p>
+          Clique agora no botão visualizar análise curricular, após o aceite da análise é só solicitar a
+          matrícula
+          e prosseguir com as alterações.
+        </p>
+      </div>
+      <div class="row mb-4">
+        <input type="button"
+              class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+              value="CLIQUE AQUI PARA VISUALIZAR SUA ANÁLISE CURRICULAR" (click)="onClickDownloadArquivo()">
+      </div>
+      <div class="row mb-0">
+        <label class="f-size-termos">
+          <input type="checkbox" name="analise" [(ngModel)]="model.aceiteanalise"
+                (change)="onChangeOpcao(true)" />
+          <span>Li e concordo com a análise curricular.</span>
+        </label>
+      </div>
+      <div class="row mb-0">
+        <label class="f-size-termos">
+          <input type="checkbox" name="reanalise" [(ngModel)]="model.reanalise"
+                (change)="onChangeOpcao(false)" />
+          <span>Li e NÃO concordo com a análise curricular.</span>
+        </label>
+      </div>
+      <div class="row mb-4">
+        <p>
+          Após o aceite da análise, o candidato está ciente e de acordo que somente poderá solicitar uma
+          reanálise
+          para o semestre seguinte ao do ingresso.
+        </p>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="model.aceiteanalise">
+    <div *ngIf="!acesso" class="col-sm-12 col-md-12 col-lg-12 mb-4">
+      <div class="row mb-4">
+        <input type="button"
+              class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+              value="SOLICITAR MATRÍCULA" (click)="onClickAceiteAnalise()">
+      </div>
+    </div>
+    <div class="row mb-4" *ngIf="acesso">
+      <div role="alert" class="alert alert-warning col-md-12 text-center">
+        <strong>A solicitação da matrícula deverá ser realizada pelo cadidato.</strong>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="model.reanalise">
+    <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+      <div *ngIf="!acesso" class="row mb-4">
+        <input type="button"
+              class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+              value="SOLICITAR REANÁLISE" (click)="onClickReanalise()">
+      </div>
+      <div class="row" *ngIf="acesso">
+        <div role="alert" class="alert alert-warning col-md-12 text-center">
+          <strong>A solicitação da reanálise deverá ser realizada pelo cadidato.</strong>
+        </div>
+      </div>
+      <ng-container *ngIf="solicitarreanalise">
+        <form #form="ngForm" (ngSubmit)="form.valid && onSubmitReanalise()" novalidate>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <app-drop-down-list name="motivo" #motivo
+                                  [title]="'Por qual motivo deseja solicitar uma reanálise?'" [itens]="motivosreanalise"
+                                  [show]="true" [defaultvalue]="'Selecione uma opção'"
+                                  (selectChange)="onChangeMotivo($event)" [required]="true">
+              </app-drop-down-list>
+            </div>
+          </div>
+          <div class="form-row" *ngIf="justificarmotivo">
+            <div class="form-group col-md-12">
+              <div class="input-field col s12  p-0 w-100 bd-highlight mt-2 mb-0">
+                <textarea id="justificativa" class="materialize-textarea" maxlength="1000" rows="20"
+                          required [(ngModel)]="model.justificativa" name="justificativa"></textarea>
+                <label for="justificativa" class="font-weight-normal">Descreva o motivo</label>
+              </div>
+              <div class="p-0 w-100 d-flex justify-content-left mt-2 mb-0">
+                <label><strong>1000</strong> caracteres restantes</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-12 d-flex justify-content-center">
+              <input type="submit" [disabled]="form.invalid"
+                    class="btn btn-next d-flex align-items-center col-sm-12 col-md-12 col-lg-12 justify-content-center btn-orange"
+                    value="SALVAR">
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+<ng-template #msgReprovado>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM!</h1>
+      <p>
+        Você se inscreveu no Processo Seletivo {{detalheInscricao.periodoLetivo}} mas, infelizmente, não foi aprovado.
+      </p>
+      <p>O Centro Universitário FAM agradece a sua participação!
+      <p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #msgAprovado>
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <h1 class="h5 font-weight-bold">Seja bem-vindo(a) à FAM!</h1>
+      <p>Parabéns! Sua documentação foi aprovada para o Processo Seletivo {{detalheInscricao.periodoLetivo}}.</p>
+      <p>
+        Fique atento no período de matrícula.
+      </p>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps == 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso == formaIngresso.Enem && detalheInscricao.idps != 299">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaNovaChamadaMedicinaENEM}}<br>
+            <label><b>Período de matrícula:</b> {{segundaNovaChamadaPeriodoMatriculaMedicinaENEM}}.</label>
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="detalheInscricao.processoSeletivo == 'MEDICINA' && detalheInscricao.idFormaIngresso != formaIngresso.Enem">
+        <li>
+          <p>
+            <b>1.ª Chamada:</b> {{primeiraChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{primeiraChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+        <li>
+          <p>
+            <b>2.ª Chamada:</b> {{segundaChamadaMedicinaOutros}}<br>
+            <label><b>Período de matrícula:</b> {{segundaChamadaPeriodoMatriculaMedicinaOutros}}.</label>
+          </p>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <p>
+            <b>Horário de atendimento</b><br>
+            <label><b>Segunda a sexta-feira:</b> Das 11h às 21h</label><br>
+            <label><b>Sábados:</b> Das 09h às 12h</label>
+          </p>
+        </li>
+      </ul>
+
+      <p>O Centro Universitário FAM agradece a sua participação!
+      <p>
+    </div>
+  </div>
+</ng-template>

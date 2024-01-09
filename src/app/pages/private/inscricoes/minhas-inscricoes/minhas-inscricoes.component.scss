@@ -1,0 +1,163 @@
+.img-fundo-area-aluno {
+  background-image: url("https://www.vemprafam.com.br/api/request_painel_do_candidato.php?c=bg");
+  /*height: 370px;*/
+  /*padding: 15px;*/
+}
+
+.img-painel-candidato {
+  /*height: 100%;*/
+  /*width: 100%;*/
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.card-disabled {
+  opacity: 0.6;
+  background-color: #cbcbcb;
+}
+
+.height-100-porc {
+  height: 100%;
+}
+
+.padding-1-porc {
+  padding: 1%;
+}
+
+@media (min-width:1200) {
+  .card-body {
+    min-height: 12rem;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .card-body {
+    min-height: 14rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .card-body {
+    min-height: 13rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .card-body {
+    min-height: 13rem;
+    font-size: 0.7rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+}
+
+.listaOpcoes {
+  position: absolute;
+  z-index: 1;
+  width: 5%;
+  right: 0;
+  margin-top: 10px;
+}
+
+@media (max-width: 415px) {}
+
+.card-body {
+  cursor: pointer;
+}
+
+.card-body:hover {
+  box-shadow: 0 0 3px rgba(0, 0, 0, .125), 0 3px 5px rgba(0, 0, 0, .2);
+  border-left: 1px solid #fd7e14;
+}
+
+.badge {
+  /*padding: 1px 0.4em !important;*/
+  white-space: pre-line;
+  height: 100%;
+}
+
+.bg-insc-0 {
+  // AceiteIndisponivel
+  background-color: #6c757d !important;
+  color: #fff !important;
+}
+
+.bg-insc-1 {
+  // AceiteDisponivel
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.bg-insc-2 {
+  // PendentePagamento
+  background-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+.bg-insc-3 {
+  // ProcessandoPagamento
+  background-color: #17a2b8 !important;
+  color: #fff !important;
+}
+
+.bg-insc-4 {
+  // PagamentoRecebido
+  background-color: #007bff !important;
+  color: #fff !important;
+}
+
+.bg-insc-5 {
+  // Matriculado
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.bg-insc-6 {
+  // PendenteFormaIngresso
+  background-color: #fc8600 !important;
+  color: #fff !important;
+}
+
+.bg-insc-7 {
+  // PendentePagamentoTaxaInscricao
+  background-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+.bg-insc-8 {
+  // PreInscricao
+  background-color: #e7bf09 !important;
+  color: #000 !important;
+}
+
+.bg-insc-9 {
+  // ReAceiteDisponivel
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.bg-insc-10 {
+  // AguardandoClassificacaoChamada
+  background-color: #000 !important;
+  color: #FFF !important;
+}
+
+.bg-insc-11 {
+  // AguardandoClassificacaoChamada
+  background-color: rgb(102, 102, 102);
+  color: #000 !important;
+}
+
+.colorFam-orange {
+  color: #FF8400 !important;
+}
+
+.text-gray:hover {
+  color: #17a2b8 !important;
+}
